@@ -1,0 +1,122 @@
+[
+    {
+        "id": 1,
+        "name": "Give dog a bath",
+        "completed": true,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 2,
+        "name": "Do laundry",
+        "completed": false,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 3,
+        "name": "Vacuum floor",
+        "completed": true,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 4,
+        "name": "Feed cat",
+        "completed": false,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 5,
+        "name": "Change light bulbs",
+        "completed": true,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 6,
+        "name": "Go to Store",
+        "completed": false,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 7,
+        "name": "Fill gas tank",
+        "completed": true,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 8,
+        "name": "Change linens",
+        "completed": true,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 9,
+        "name": "Rake leaves",
+        "completed": true,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 10,
+        "name": "Bake Cookies",
+        "completed": false,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 11,
+        "name": "Take nap",
+        "completed": false,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 12,
+        "name": "Read book",
+        "completed": false,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 13,
+        "name": "Exercise",
+        "completed": false,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 14,
+        "name": "Give dog a bath",
+        "completed": true,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 15,
+        "name": "Do laundry",
+        "completed": false,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 16,
+        "name": "Vacuum floor",
+        "completed": true,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 17,
+        "name": "Feed cat",
+        "completed": false,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 18,
+        "name": "Change light bulbs",
+        "completed": true,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 19,
+        "name": "Go to Store",
+        "completed": false,
+        "addedDate": "Wed Jun 01 2022"
+    },
+    {
+        "id": 20,
+        "name": "Fill gas tank",
+        "completed": false,
+        "addedDate": "Wed Jun 01 2022"
+    }
+]
