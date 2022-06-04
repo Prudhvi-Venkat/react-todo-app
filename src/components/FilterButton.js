@@ -3,13 +3,14 @@ import React from 'react'
 function FilterButton(props) {
     return (
         <>
-            <li className="w-full">
-                <button type="button" className="text-md inline-block p-4 w-full bg-white rounded-r-lg hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" aria-pressed="true">
-                    <span className="hidden">Show </span>
-                    <span>All</span>
-                    <span className="hidden"> tasks</span>
-                </button>
-            </li>
+            <button
+                type="button"
+                className="py-2 px-4 text-sm font-medium text-gray-900 bg-transparent rounded border border-gray-900 hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700"
+                onClick={() => props.setFilter(props.name)}
+                aria-pressed={props.isPressed}
+                aria-current={props.isPressed}>
+                {props.name}
+            </button>
         </>
     )
 }

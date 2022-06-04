@@ -4,8 +4,14 @@ function Form(props) {
     const [name, setName] = useState('')
     function handleSubmit(e) {
         e.preventDefault();
-        props.addTask(name)
-        setName('')
+        if (name === '') {
+            alert("Field is empty")
+        }
+        else {
+            props.addTask(name)
+            setName('')
+        }
+
     }
     function handleChange(e) {
         setName(e.target.value)
@@ -14,10 +20,8 @@ function Form(props) {
         <>
             <form className="flex flex-col space-y-5 w-3/4" onSubmit={handleSubmit}>
                 <div className="flex flex-col p-5 justify-center items-center space-x-5 w-1/2 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mx-auto">
+                    <h2 className='text-center text-xl font-bold text-gray-600 mt-5 mb-5'>Add Item</h2>
                     <div className="flex flex-row w-full mb-5">
-                        <label htmlFor="new-todo-input" className="hidden text-center mb-2 text-xl font-medium text-gray-900 dark:text-gray-300">
-                            Add Item
-                        </label>
                         <input
                             type="text"
                             id="new-todo-input"
