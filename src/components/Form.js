@@ -8,7 +8,7 @@ function Form(props) {
             alert("Field is empty")
         }
         else {
-            props.addTask(name)
+            props.addTask(name.charAt(0).toUpperCase() + name.slice(1))
             setName('')
         }
 
