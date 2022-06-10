@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { MdEdit, MdEditOff, MdDelete, MdDeleteForever } from 'react-icons/md'
 import format from 'date-fns/format';
 
-function Todo({ props }) {
+function Todo(props) {
     const [isEditing, setEditing] = useState(false)
     const [newName, setNewName] = useState('');
 
@@ -46,7 +46,7 @@ function Todo({ props }) {
                         >
                             <input
                                 type="checkbox"
-                                defaultValue={props.staus}
+                                defaultValue={props.status}
                                 id="edit-todo-item"
                                 className="sr-only peer"
                                 onChange={() => props.toggleTask(props.id)}
@@ -117,7 +117,7 @@ function Todo({ props }) {
                         <button
                             type="button"
                             className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-lg px-4 py-2 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                            onClick={() => props.showModal(props.id)}>
+                            onClick={() => props.deleteTask(props.id)}>
                             <MdDelete /> <span className="hidden">{props.name}</span>
                         </button>
                         :

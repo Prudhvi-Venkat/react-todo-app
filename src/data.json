@@ -43,7 +43,7 @@
     },
     {
         "id": 7,
-        "name": "Fill gas tank",
+        "name": "Fill Water tank",
         "completed": true,
         "addedDate": "01-06-2022",
         "editedDate": "02-06-2022"
@@ -92,14 +92,14 @@
     },
     {
         "id": 14,
-        "name": "Give dog a bath",
+        "name": "Car Wash",
         "completed": true,
         "addedDate": "01-06-2022",
         "editedDate": "02-06-2022"
     },
     {
         "id": 15,
-        "name": "Do laundry",
+        "name": "Carpet Cleaning",
         "completed": false,
         "addedDate": "01-06-2022",
         "editedDate": "02-06-2022"
