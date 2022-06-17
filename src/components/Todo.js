@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { MdEdit, MdEditOff, MdDelete, MdDeleteForever } from 'react-icons/md'
-import format from 'date-fns/format';
 
 function Todo(props) {
     const [isEditing, setEditing] = useState(false)
@@ -26,7 +25,7 @@ function Todo(props) {
                 <h2 className='text-center text-xl font-bold text-gray-600 mt-5'>Edit Item</h2>
                 <div className='flex justify-between items-center mx-auto'>
                     <h4 className='mb-5 text-left text-xl font-semibold text-gray-600 '>{props.name}</h4>
-                    <span className='mb-5 text-sm font-semibold text-gray-400 '> Added : {format(new Date(), props.addedDate, 'do-MMM-yyy @ HH:mm a')}</span>
+                    <span className='mb-5 text-sm font-semibold text-gray-400 '> Added : {props.addedDate}</span>
                 </div>
                 <div className="flex flex-row w-auto mb-5">
                     <input
