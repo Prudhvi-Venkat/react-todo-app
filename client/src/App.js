@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Todo from "./components/Todo";
 import FilterButton from "./components/FilterButton";
 import Form from "./components/Form";
-import Footer from './Footer';
+import Footer from './components/Footer';
 import axios from 'axios'
 
 function App(props) {
@@ -29,7 +29,7 @@ function App(props) {
   };
   const FILTER_NAMES = Object.keys(FILTER_MAP);
 
-  const todoItemsServer = todos.map(todoItem => <Todo key={todoItem.todo_id} id={todoItem.todo_id} name={todoItem.description} status={todoItem.status} deleteTask={deleteTask} toggleTask={toggleTask} editTask={editTask} addedDate={todoItem.addedDate} editedDate={todoItem.editedDate} />)
+  const todoItemsServer = todos.map(todoItem => { return <Todo key={todoItem.todo_id} id={todoItem.todo_id} name={todoItem.description} status={todoItem.status} deleteTask={deleteTask} toggleTask={toggleTask} editTask={editTask} addedDate={todoItem.added_date} editedDate={todoItem.editedDate} /> })
 
   const filterList = FILTER_NAMES.map(name => (
     <FilterButton key={name} name={name} isPressed={name === filter} setFilter={setFilter} />
@@ -51,7 +51,9 @@ function App(props) {
           todo_id: id,
           status: true
         })
-        return { ...todos, status: true }
+          .then(res => res.data)
+          .catch((err) => console.log(err))
+        // return { ...todos, status: true }
       }
       return todos;
     })
@@ -66,8 +68,8 @@ function App(props) {
     }
     const editedTasksList = todos.map(todoItem => {
       if ((todoItem.todo_id === id) && (newName !== '')) {
-        axios.patch(baseURL + `/todos/${id}`, editedData).then((res) => setTodoList(res)).catch(err => Promise.reject(err))
-        return { ...todos, description: newName }
+        axios.patch(baseURL + `/todos/${id}`, editedData).then((res) => setTodoList(res.data)).catch(err => Promise.reject(err))
+        // return { ...todos, description: newName }
       }
       return todos;
     });
@@ -95,9 +97,7 @@ function App(props) {
             </div>
             <h2 className="text-md text-slate-600 font-semibold text-center mt-5 mb-5">{headingText}</h2>
             <div className="container p-5 w-auto flex flex-col text-sm font-semibold justify-between text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-              <ul key={todos.todo_id}>
-                {todoItemsServer}
-              </ul>
+              {todoItemsServer}
             </div>
           </div>
         </div>

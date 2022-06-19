@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { MdEdit, MdEditOff, MdDelete, MdDeleteForever } from 'react-icons/md'
+import { formatInTimeZone } from 'date-fns-tz'
 
 function Todo(props) {
     const [isEditing, setEditing] = useState(false)
     const [newName, setNewName] = useState('');
+
+    const timeZone = 'Asia/Kolkata'
 
     function handleChange(e) {
         setNewName(e.target.value)
@@ -25,7 +28,7 @@ function Todo(props) {
                 <h2 className='text-center text-xl font-bold text-gray-600 mt-5'>Edit Item</h2>
                 <div className='flex justify-between items-center mx-auto'>
                     <h4 className='mb-5 text-left text-xl font-semibold text-gray-600 '>{props.name}</h4>
-                    <span className='mb-5 text-sm font-semibold text-gray-400 '> Added : {props.addedDate}</span>
+                    <span className='mb-5 text-sm font-semibold text-gray-400 '> Added : {formatInTimeZone((props.addedDate), timeZone, 'do MMM yyyy')}</span>
                 </div>
                 <div className="flex flex-row w-auto mb-5">
                     <input
@@ -80,55 +83,50 @@ function Todo(props) {
         </form>
     );
     const viewTemplate = (
-        <div>
-            <li className="w-auto flex px-4 py-2 border-b justify-between items-center border-gray-200 rounded-t-lg dark:border-gray-600" >
-                <div className="ml-2">
-                    <input
-                        id={props.id}
-                        type="checkbox"
-                        defaultChecked={props.status}
-                        className='w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                        onChange={() => props.toggleTask(props.id)}
-                    />
-                    <label
-                        className="ml-2 text-md font-semibold text-gray-900 dark:text-gray-300"
-                        htmlFor={props.id}>
-                        {props.name}
-                    </label>
-                </div>
-                <div>
-                    {(props.status !== true) ?
-                        <button
-                            type="button"
-                            className="py-2 px-4 mr-2 mb-2 text-lg font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                            onClick={() => setEditing(true)}>
-                            <MdEdit /> <span className="hidden">{props.name}</span>
-                        </button>
-                        :
-                        <button
-                            type="button"
-                            disabled
-                            className="py-2 px-4 mr-2 mb-2 cursor-not-allowed text-lg font-medium text-white focus:outline-none bg-gray-600 rounded-full border-none hover:bg-gray-900 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                            <MdEditOff /> <span className="hidden">{props.name}</span>
-                        </button>
-                    }
-                    {(props.status !== false) ?
-                        <button
-                            type="button"
-                            className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-lg px-4 py-2 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                            onClick={() => props.deleteTask(props.id)}>
-                            <MdDelete /> <span className="hidden">{props.name}</span>
-                        </button>
-                        :
-                        <button
-                            type="button"
-                            className="text-white text-lg cursor-not-allowed bg-gray-700 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full px-4 py-2 text-center mr-2 mb-2 hover:text-red-700 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                            <MdDeleteForever /> <span className="hidden">{props.name}</span>
-                        </button>
-                    }
-                </div>
-            </li >
-        </div>
+        <ul key={props.id}>
+            <div>
+                <li className="w-auto flex px-4 py-2 border-b justify-between items-center border-gray-200 rounded-t-lg dark:border-gray-600" >
+                    <div className="ml-2">
+                        <label
+                            className="text-lg font-semibold text-gray-900 dark:text-gray-300"
+                            htmlFor={props.id}>
+                            {props.name}
+                        </label>
+                    </div>
+                    <div>
+                        {(props.status !== true) ?
+                            <button
+                                type="button"
+                                className="py-2 px-4 mr-2 mb-2 text-lg font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                                onClick={() => setEditing(true)}>
+                                <MdEdit /> <span className="hidden">{props.name}</span>
+                            </button>
+                            :
+                            <button
+                                type="button"
+                                disabled
+                                className="py-2 px-4 mr-2 mb-2 cursor-not-allowed text-lg font-medium text-white focus:outline-none bg-gray-600 rounded-full border-none hover:bg-gray-900 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                <MdEditOff /> <span className="hidden">{props.name}</span>
+                            </button>
+                        }
+                        {(props.status !== false) ?
+                            <button
+                                type="button"
+                                className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-lg px-4 py-2 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                                onClick={() => props.deleteTask(props.id)}>
+                                <MdDelete /> <span className="hidden">{props.name}</span>
+                            </button>
+                            :
+                            <button
+                                type="button"
+                                className="text-white text-lg cursor-not-allowed bg-gray-700 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full px-4 py-2 text-center mr-2 mb-2 hover:text-red-700 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                <MdDeleteForever /> <span className="hidden">{props.name}</span>
+                            </button>
+                        }
+                    </div>
+                </li >
+            </div>
+        </ul>
     );
 
     return (

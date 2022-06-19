@@ -5,7 +5,14 @@ const pool = new Pool({
     password: "7859",
     host: "localhost",
     port: 5432,
-    database: "todo-javascript"
+    dialect: "postgres",
+    database: "todo-javascript",
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    }
 });
 
 module.exports = pool;
