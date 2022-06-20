@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { MdEdit, MdEditOff, MdDelete, MdDeleteForever } from 'react-icons/md'
 import { formatInTimeZone } from 'date-fns-tz'
+import { connect, useSelector } from 'react-redux'
 
 function Todo(props) {
     const [isEditing, setEditing] = useState(false)
     const [newName, setNewName] = useState('');
-
     const timeZone = 'Asia/Kolkata'
+    const desc = useSelector(state => state.description)
 
     function handleChange(e) {
         setNewName(e.target.value)
@@ -14,9 +15,9 @@ function Todo(props) {
     function handleSubmit(e) {
         e.preventDefault();
         if (newName === "") {
-            props.editTask(props.id, props.name)
+            props.editTask(props.id, props.name, props.status)
         } else {
-            props.editTask(props.id, newName)
+            props.editTask(props.id, newName, props.status, { edited_date: new Date() })
         }
         setNewName('')
         setEditing(false)
@@ -28,7 +29,7 @@ function Todo(props) {
                 <h2 className='text-center text-xl font-bold text-gray-600 mt-5'>Edit Item</h2>
                 <div className='flex justify-between items-center mx-auto'>
                     <h4 className='mb-5 text-left text-xl font-semibold text-gray-600 '>{props.name}</h4>
-                    <span className='mb-5 text-sm font-semibold text-gray-400 '> Added : {formatInTimeZone((props.addedDate), timeZone, 'do MMM yyyy')}</span>
+                    <span className='mb-5 text-sm font-semibold text-gray-400 '> Added : {formatInTimeZone(props.addedDate, timeZone, 'do MMM yyyy')}</span>
                 </div>
                 <div className="flex flex-row w-auto mb-5">
                     <input
@@ -74,7 +75,7 @@ function Todo(props) {
                     (props.editedDate)
                         ?
                         <div className='flex justify-center items-center mt-3'>
-                            <span className='inline-flex text-sm text-gray-400'>Edited : {props.editedDate}</span>
+                            <span className='inline-flex text-sm text-gray-400'>Edited :  {formatInTimeZone(props.editedDate, timeZone, 'do MMM yyyy')}</span>
                         </div>
                         :
                         ''
@@ -136,4 +137,20 @@ function Todo(props) {
     )
 }
 
-export default Todo
+const mapStateToProps = state => {
+    return {
+        id: state.todo_id,
+        desc: state.description,
+        status: state.status,
+        added_date: state.added_date,
+        edited_date: state.edited_date
+    }
+}
+const mapDispatchToProps = state => {
+    return {
+
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Todo)

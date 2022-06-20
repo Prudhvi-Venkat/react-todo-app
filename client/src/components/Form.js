@@ -14,6 +14,7 @@ function Form(props) {
             e.preventDefault();
             axios.post(baseURL, {
                 description: name,
+                added_date: new Date()
             }).then(res => {
                 if (res.status === 200 || res.status === 201) {
                     console.log(res)

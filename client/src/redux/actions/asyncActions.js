@@ -1,11 +1,7 @@
 import axios from "axios"
+import { FETCH_DATA_REQUEST, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE } from './ayncActionTypes'
 
 const baseURL = "http://localhost:5000"
-
-const FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST'
-const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS'
-const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE'
-
 
 const fetchDataRequest = () => {
     return {
@@ -29,7 +25,7 @@ const fetchDataFailure = (error) => {
     }
 }
 
-const fetchData = () => {
+export const fetchData = () => {
     return function (dispatch, getState) {
         dispatch(fetchDataRequest())
         axios.get(baseURL + "/todos")
@@ -42,5 +38,3 @@ const fetchData = () => {
             })
     }
 }
-
-export { FETCH_DATA_REQUEST, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE, fetchData }

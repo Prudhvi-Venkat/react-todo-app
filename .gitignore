@@ -22,6 +22,7 @@ yarn.lock
 
 # misc
 .DS_Store
+.gitignore
 .env.local
 .env.development.local
 .env.test.local

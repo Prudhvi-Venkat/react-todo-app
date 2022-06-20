@@ -1,4 +1,4 @@
-import * as asyncActions from "../actions/asyncActions"
+import * as asyncActions from "../actions/ayncActionTypes"
 
 
 const initialState = {

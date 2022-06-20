@@ -4,6 +4,8 @@ import FilterButton from "./components/FilterButton";
 import Form from "./components/Form";
 import Footer from './components/Footer';
 import axios from 'axios'
+import { connect } from 'react-redux';
+import Test from './components/Test'
 
 function App(props) {
   const [filter, setFilter] = useState('All');
@@ -29,7 +31,7 @@ function App(props) {
   };
   const FILTER_NAMES = Object.keys(FILTER_MAP);
 
-  const todoItemsServer = todos.map(todoItem => { return <Todo key={todoItem.todo_id} id={todoItem.todo_id} name={todoItem.description} status={todoItem.status} deleteTask={deleteTask} toggleTask={toggleTask} editTask={editTask} addedDate={todoItem.added_date} editedDate={todoItem.editedDate} /> })
+  const todoItemsServer = todos.map(todoItem => { return <Todo key={todoItem.todo_id} id={todoItem.todo_id} name={todoItem.description} status={todoItem.status} deleteTask={deleteTask} toggleTask={toggleTask} editTask={editTask} addedDate={todoItem.added_date} editedDate={todoItem.edited_date} /> })
 
   const filterList = FILTER_NAMES.map(name => (
     <FilterButton key={name} name={name} isPressed={name === filter} setFilter={setFilter} />
@@ -39,8 +41,8 @@ function App(props) {
 
   const headingText = `${todoItemsServer.length} tasks remaining`;
 
-  function addTask(name) {
-    const newTodoItem = { name: name }
+  function addTask(name, added_date) {
+    const newTodoItem = { name: name, added_date: new Date() }
     setTodoList([...todos, newTodoItem])
   }
 
@@ -60,11 +62,13 @@ function App(props) {
     setTodoList(updatedTasks)
   }
 
-  function editTask(id, newName) {
+  function editTask(id, newName, status, edited_date) {
 
     const editedData = {
       todo_id: id,
-      description: newName
+      description: newName,
+      status: status,
+      edited_date: new Date()
     }
     const editedTasksList = todos.map(todoItem => {
       if ((todoItem.todo_id === id) && (newName !== '')) {
@@ -85,10 +89,12 @@ function App(props) {
 
   return (
     <>
+      <Test />
       <div className="flex flex-col justify-center items-center mx-auto max-h-screeen space-y-10 mb-10">
         <h1 className="text-2xl text-slate-600 font-semibold text-center">Todo App</h1>
         <div className='flex w-full'>
           <div className='w-1/2'>
+            {props.todo_id}
             <Form addTask={addTask} />
           </div>
           <div className='w-1/2 mx-auto p-10'>
@@ -107,4 +113,21 @@ function App(props) {
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    todo_id: state.todo_id,
+    desc: state.description,
+    status: state.status,
+    added_date: state.added_date,
+    edited_date: state.edited_date
+  }
+}
+const mapDispatchToProps = state => {
+  return {
+
+  }
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

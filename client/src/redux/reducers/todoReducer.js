@@ -1,25 +1,57 @@
-import { ADD_TODO, EDIT_TODO, TOGGLE_TODO, DELETE_TODO } from "../actions/actions"
+import * as todoActions from "../actions/todoActionTypes"
 
 const initialState = {
-    loading: false,
-    data: [],
+    loading: true,
+    todoData: [],
     error: ''
 }
 
-const todoReducer = (state = initialState, action) => {
-    // eslint-disable-next-line default-case
+function todoReducer(state = initialState, action) {
     switch (action.type) {
-        case ADD_TODO: return {
+        case todoActions.ALL_TODOS: return {
+            loading: false,
+            todoData: action.payload,
+            error: ''
+        }
+        case todoActions.ADD_TODO: return {
+            loading: false,
+            todoData: {
+                ...state,
+                description: action.payload.description,
+            },
+            error: ''
+        }
+        case todoActions.EDIT_TODO: return {
+            loading: false,
+            todoData: {
+                ...state,
+                id: action.payload.id,
+                description: action.payload.description,
+                status: action.payload.status
+            },
+            error: ''
+        }
+        case todoActions.TOGGLE_TODO: return {
+            loading: false,
+            todoData: {
+                ...state,
+                id: action.payload.id,
+                status: action.payload.status
+            },
+            error: ''
 
         }
-        case EDIT_TODO: return {
-
+        case todoActions.DELETE_TODO: return {
+            loading: false,
+            todoData: {
+                ...state,
+                id: action.payload.id
+            }
         }
-        case TOGGLE_TODO: return {
-
-        }
-        case DELETE_TODO: return {
-
+        case todoActions.FETCH_FAIL: return {
+            loading: false,
+            todoData: [],
+            error: action.payload
         }
         default: return state
     }
