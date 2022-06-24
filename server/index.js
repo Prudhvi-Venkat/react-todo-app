@@ -1,36 +1,66 @@
 const express = require('express')
-const app = express();
 const cors = require('cors');
+const app = express();
 const port = process.env.PORT || 5000
-const pool = require("./config/db.config");
+const pool = require("./config/config.json");
+const db = require('./models')
+const Todo = db.todos
+const Op = db.Sequelize.Op;
 
 // MiddleWare Cors
-app.use(cors());
+var corsOptions = {
+    origin: true,
+    methods: ['GET', 'PUT', 'POST', 'DELETE'],
+    optionsSuccessStatus: 200,
+    preflightContinue: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+
+
+}
+app.options('*', cors(corsOptions));
 app.use(express.json())
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+})
+app.use(express.urlencoded({ extended: true }));
+
+// Sequelize
+
+db.sequelize.sync()
+    .then(() => console.log("Database Sync Successfull"))
+    .catch((err) => console.log(err.message))
+
 
 // Routes
 
 // Add a todo
-app.post("/todos", async (req, res) => {
-    try {
-        const { description, added_date } = req.body
-        const newTodo = await pool.query("INSERT INTO todo (description, added_date) VALUES ($1, $2) RETURNING *",
-            [description, added_date]
-        );
-        res.json(newTodo.rows)
-    } catch (err) {
-        console.error(err.message)
+app.post("/todos", cors(corsOptions), async (req, res) => {
+    if (!req.body.description) {
+        res.status(400).send({
+            message: "Description is empty"
+        })
     }
+    const newTodo = {
+        description: req.body.description,
+        status: false
+    }
+    await Todo.create(newTodo)
+        .then((data) => res.send(data))
+        .catch((err) => console.log(err))
+
 })
 
 // Get all todos
 app.get("/todos", async (req, res) => {
-    try {
-        const allTodos = await pool.query("SELECT * FROM todo ORDER BY todo_id ASC")
-        res.json(allTodos.rows.sort(allTodos.todo_id))
-    } catch (err) {
-        console.error(err.message)
+    if (!req) {
+        res.status(400).send({
+            message: "Fetch failed"
+        })
     }
+    await Todo.findAll()
+        .then((data) => res.json(data))
 })
 // Get a todo item
 app.get("/todos/:id", async (req, res) => {
@@ -59,14 +89,24 @@ app.patch("/todos/:id", async (req, res) => {
 
 // Del todo
 app.delete("/todos/:id", async (req, res) => {
-    try {
-        const { id } = req.params
-        const delTodo = await pool.query("DELETE FROM todo WHERE todo_id = $1", [id]);
-        res.json(delTodo.rows)
-        console.log(`Deleted todo item with ID : ${id}`)
-    } catch (err) {
-        console.error(err.message)
-    }
+    const id = req.params.id
+    Todo.destroy({
+        where: { id: id }
+    }).then((num) => {
+        if (num) {
+            res.send({
+                message: `Deleted todo item with ID : ${id}`
+            })
+        } else {
+            res.send({
+                message: `Failed to delete todo item with ID : ${id}`
+            })
+        }
+    }).catch((err) => {
+        res.status(500).send({
+            message: `Could not delete Tutorial with id : ${id}`
+        })
+    });
 })
 
 app.listen(port, () => {

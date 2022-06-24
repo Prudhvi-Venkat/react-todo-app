@@ -2,7 +2,9 @@ import { FETCH_ALL_TODOS, ALL_TODOS, ADD_TODO, EDIT_TODO, TOGGLE_TODO, DELETE_TO
 import axios from "axios";
 
 
-const baseURL = "http://localhost:5000"
+const todoApi = axios.create({
+    baseURL: "http://localhost:5000"
+})
 
 
 const fecthAllTodo = () => {
@@ -11,10 +13,10 @@ const fecthAllTodo = () => {
     }
 }
 
-const allTodos = (apiData) => {
+const allTodos = (response) => {
     return {
         type: ALL_TODOS,
-        payload: apiData
+        payload: response
     }
 }
 const fetchFail = (error) => {
@@ -51,18 +53,15 @@ const toggleTodo = (id, status) => {
 const deleteTodo = (id) => {
     return {
         type: DELETE_TODO,
-        payload: {
-            id
-        }
+        payload: id
     }
 }
 export const fetchTodoData = () => {
-    return function (dispatch) {
-        dispatch(fecthAllTodo())
-        axios.get(baseURL + "/todos")
+    return async function (dispatch) {
+        await dispatch(fecthAllTodo())
+        todoApi.get("/todos")
             .then(response => {
-                const apiData = response.data
-                dispatch(allTodos(apiData))
+                dispatch(allTodos(response.data))
             })
             .catch(error => {
                 dispatch(fetchFail(error.message))
@@ -72,7 +71,7 @@ export const fetchTodoData = () => {
 export const addTodoData = (description) => {
     return function (dispatch) {
         dispatch(addTodo(description))
-        axios.put(baseURL + "/todos/")
+        todoApi.put("/todos/")
             .then(response => {
                 const apiData = response.data
                 dispatch(allTodos(apiData))
@@ -85,7 +84,7 @@ export const addTodoData = (description) => {
 export const editTodoData = (id, status, description) => {
     return function (dispatch) {
         dispatch(editTodo(id, description, status))
-        axios.delete(baseURL + "/todos/:id")
+        todoApi.delete(`/todos/${id}`)
             .then(response => {
                 const apiData = response.data
                 dispatch(allTodos(apiData))
@@ -99,7 +98,7 @@ export const editTodoData = (id, status, description) => {
 export const toggleTodoData = (id, status) => {
     return function (dispatch) {
         dispatch(toggleTodo(id, status))
-        axios.delete(baseURL + "/todos/:id")
+        todoApi.delete(`/todos/${id}`)
             .then(response => {
                 const apiData = response.data
                 dispatch(allTodos(apiData))
@@ -112,7 +111,7 @@ export const toggleTodoData = (id, status) => {
 export const deleteTodoData = (id) => {
     return function (dispatch) {
         dispatch(deleteTodo(id))
-        axios.delete(baseURL + "/todos/:id")
+        todoApi.delete(`/todos/${id}`)
             .then(response => {
                 const apiData = response.data
                 dispatch(allTodos(apiData))

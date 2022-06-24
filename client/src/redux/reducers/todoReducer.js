@@ -16,7 +16,6 @@ function todoReducer(state = initialState, action) {
         case todoActions.ADD_TODO: return {
             loading: false,
             todoData: {
-                ...state,
                 description: action.payload.description,
             },
             error: ''
@@ -24,7 +23,6 @@ function todoReducer(state = initialState, action) {
         case todoActions.EDIT_TODO: return {
             loading: false,
             todoData: {
-                ...state,
                 id: action.payload.id,
                 description: action.payload.description,
                 status: action.payload.status
@@ -34,7 +32,6 @@ function todoReducer(state = initialState, action) {
         case todoActions.TOGGLE_TODO: return {
             loading: false,
             todoData: {
-                ...state,
                 id: action.payload.id,
                 status: action.payload.status
             },
@@ -42,11 +39,10 @@ function todoReducer(state = initialState, action) {
 
         }
         case todoActions.DELETE_TODO: return {
+            ...initialState,
             loading: false,
-            todoData: {
-                ...state,
-                id: action.payload.id
-            }
+            todoData: state.todoData.filter((todoItem) => todoItem.todo_id !== action.payload.id),
+            error: ''
         }
         case todoActions.FETCH_FAIL: return {
             loading: false,

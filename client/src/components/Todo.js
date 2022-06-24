@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import { MdEdit, MdEditOff, MdDelete, MdDeleteForever } from 'react-icons/md'
 import { formatInTimeZone } from 'date-fns-tz'
-import { connect, useSelector } from 'react-redux'
+import { connect } from 'react-redux'
 
 function Todo(props) {
     const [isEditing, setEditing] = useState(false)
     const [newName, setNewName] = useState('');
     const timeZone = 'Asia/Kolkata'
-    const desc = useSelector(state => state.description)
 
     function handleChange(e) {
         setNewName(e.target.value)
@@ -29,7 +28,7 @@ function Todo(props) {
                 <h2 className='text-center text-xl font-bold text-gray-600 mt-5'>Edit Item</h2>
                 <div className='flex justify-between items-center mx-auto'>
                     <h4 className='mb-5 text-left text-xl font-semibold text-gray-600 '>{props.name}</h4>
-                    <span className='mb-5 text-sm font-semibold text-gray-400 '> Added : {formatInTimeZone(props.addedDate, timeZone, 'do MMM yyyy')}</span>
+                    <span className='mb-5 text-sm font-semibold text-gray-400 '> Added : </span>
                 </div>
                 <div className="flex flex-row w-auto mb-5">
                     <input
@@ -61,7 +60,7 @@ function Todo(props) {
                         </label>
                     </div>
                     <div>
-                        <button type="button" className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
+                        <button disabled type="button" className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800  focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
                             onClick={handleSubmit}>
                             Save
                         </button>
@@ -75,7 +74,7 @@ function Todo(props) {
                     (props.editedDate)
                         ?
                         <div className='flex justify-center items-center mt-3'>
-                            <span className='inline-flex text-sm text-gray-400'>Edited :  {formatInTimeZone(props.editedDate, timeZone, 'do MMM yyyy')}</span>
+                            <span className='inline-flex text-sm text-gray-400'>Edited :  </span>
                         </div>
                         :
                         ''
