@@ -28,7 +28,7 @@ const fetchFail = (error) => {
 const addTodo = description => {
     return {
         type: ADD_TODO,
-        payload: description
+        payload: { description }
     }
 }
 
@@ -69,16 +69,13 @@ export const fetchTodoData = () => {
     }
 }
 export const addTodoData = (description) => {
-    return function (dispatch) {
-        dispatch(addTodo(description))
-        todoApi.put("/todos/")
-            .then(response => {
-                const apiData = response.data
-                dispatch(allTodos(apiData))
-            })
-            .catch(error => {
-                dispatch(fetchFail(error.message))
-            })
+    return async function (dispatch) {
+        if (description === "") {
+            console.log("Description: " + description)
+        } else {
+            await todoApi.post("/todos", { description }).then((res) => dispatch(addTodo(res.description)))
+        }
+
     }
 }
 export const editTodoData = (id, status, description) => {

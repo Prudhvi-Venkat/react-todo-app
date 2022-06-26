@@ -13,7 +13,7 @@ function App() {
   const [filter, setFilter] = useState('All');
   const [todos, setTodoList] = useState([])
 
-  const initialState = useSelector((state => state.toDo.todoData))
+  const initialState = useSelector((state) => { return state.toDo.todoData })
   const dispatch = useDispatch()
 
   const baseURL = "http://localhost:5000"
@@ -29,7 +29,7 @@ function App() {
   };
   const FILTER_NAMES = Object.keys(FILTER_MAP);
 
-  const todoItemsServer = initialState.map(todoItem => { return <Todo key={todoItem.todo_id} id={todoItem.todo_id} name={todoItem.description} status={todoItem.status} deleteTask={(id) => dispatch(deleteTodoData(id))} toggleTask={toggleTask} editTask={editTask} addedDate={todoItem.added_date} editedDate={todoItem.edited_date} /> })
+  const todoItemsServer = Object.values(initialState).map((todoItem) => { return <Todo key={todoItem.id} id={todoItem.id} name={todoItem.description} status={todoItem.status} toggleTask={toggleTask} editTask={editTask} addedDate={todoItem.createdAt} editedDate={todoItem.updatedAt} /> })
 
   const filterList = FILTER_NAMES.map(name => (
     <FilterButton key={name} name={name} isPressed={name === filter} setFilter={setFilter} />
@@ -38,11 +38,6 @@ function App() {
   // const tasksList = tasks.filter(FILTER_MAP[filter]).map(task => <Todo key={task.id} id={task.id} name={task.name} status={task.completed} toggleTask={toggleTask} editTask={editTask} deleteTask={deleteTask} addedDate={task.addedDate} editedDate={task.editedDate} />)
 
   const headingText = `${todoItemsServer.length} tasks remaining`;
-
-  function addTask(name, added_date) {
-    const newTodoItem = { name: name, added_date: new Date() }
-    setTodoList([...todos, newTodoItem])
-  }
 
   function toggleTask(id) {
     const updatedTasks = todos.map(todoItem => {
@@ -77,14 +72,6 @@ function App() {
     });
     setTodoList(editedTasksList);
   }
-
-  function deleteTask(id) {
-    axios.delete(baseURL + `/todos/${id}`).then((res) => setTodoList(res)).catch(err => Promise.reject(err))
-
-    const remainingTasks = todos.filter(todoItem => id !== todoItem.id);
-    setTodoList(remainingTasks);
-  }
-
   return (
     <>
       {/* <Test /> */}
@@ -92,7 +79,7 @@ function App() {
         <h1 className="text-2xl text-slate-600 font-semibold text-center">Todo App</h1>
         <div className='flex w-full'>
           <div className='w-1/2'>
-            <Form addTask={addTask} />
+            <Form />
           </div>
           <div className='w-1/2 mx-auto p-10'>
             <div className="flex justify-center items-center mx-auto rounded-md" role="group">

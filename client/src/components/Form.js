@@ -1,30 +1,18 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useDispatch } from "react-redux";
+import { addTodoData } from '../redux/actions/todoActions';
 
-function Form(props) {
+function Form() {
     const [name, setName] = useState('')
-
-    const baseURL = "http://localhost:5000/todos";
+    const dispatch = useDispatch()
 
     function handleSubmit(e) {
         if (!name) {
             alert("Field is empty")
         }
         else {
-            e.preventDefault();
-            axios.post(baseURL, {
-                description: name,
-                added_date: new Date()
-            }).then(res => {
-                if (res.status === 200 || res.status === 201) {
-                    console.log(res)
-                    setName('')
-                    window.location = "/"
-                } else {
-                    return Promise.reject(res)
-                }
-            })
-            props.addTask(name.charAt(0).toUpperCase() + name.slice(1))
+            dispatch(addTodoData(setName))
+            setName('')
         }
 
     }
