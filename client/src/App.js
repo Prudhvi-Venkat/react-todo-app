@@ -5,8 +5,8 @@ import Form from "./components/Form";
 import Footer from './components/Footer';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
-import Test from './components/Test'
-import { fetchTodoData, deleteTodoData } from './redux/actions/todoActions';
+// import Test from './components/Test'
+import { fecthAllTodo } from './redux/actions/todoActions';
 
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
   const baseURL = "http://localhost:5000"
 
   useEffect(() => {
-    dispatch(fetchTodoData())
+    dispatch(fecthAllTodo())
   }, [dispatch]);
 
   const FILTER_MAP = {
@@ -29,7 +29,7 @@ function App() {
   };
   const FILTER_NAMES = Object.keys(FILTER_MAP);
 
-  const todoItemsServer = Object.values(initialState).map((todoItem) => { return <Todo key={todoItem.id} id={todoItem.id} name={todoItem.description} status={todoItem.status} toggleTask={toggleTask} editTask={editTask} addedDate={todoItem.createdAt} editedDate={todoItem.updatedAt} /> })
+  const todoItemsServer = Object.values(initialState).map(todoItem => { return <Todo key={todoItem.id} id={todoItem.id} name={todoItem.description} status={todoItem.status} toggleTask={toggleTask} editTask={editTask} addedDate={todoItem.createdAt} editedDate={todoItem.updatedAt} /> })
 
   const filterList = FILTER_NAMES.map(name => (
     <FilterButton key={name} name={name} isPressed={name === filter} setFilter={setFilter} />

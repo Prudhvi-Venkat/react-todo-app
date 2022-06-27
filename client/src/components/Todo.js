@@ -127,8 +127,8 @@ function Todo(props) {
                         }
                     </div>
                 </li >
-            </div>
-        </ul>
+            </div >
+        </ul >
     );
 
     return (

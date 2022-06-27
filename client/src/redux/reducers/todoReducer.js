@@ -1,4 +1,5 @@
 import * as todoActions from "../actions/todoActionTypes"
+import { useReducer } from "react";
 
 const initialState = {
     loading: true,
@@ -8,22 +9,17 @@ const initialState = {
 
 function todoReducer(state = initialState, action) {
     switch (action.type) {
-        case todoActions.ALL_TODOS: return {
+        case todoActions.ALL_TODOS: return Object.assign({}, state, {
             ...state,
-            loading: false,
             todoData: action.payload,
-            error: ''
-        }
-        case todoActions.ADD_TODO: return {
-            loading: false,
-            todoData: [
-                ...state.todoData,
-                {
-                    description: action.payload.description,
-                }
-            ],
-            error: ''
-        }
+        })
+        case todoActions.ADD_TODO: return Object.assign({}, state, {
+            ...state,
+            todoData:
+            {
+                description: action.payload,
+            }
+        })
         case todoActions.EDIT_TODO: return {
             loading: false,
             todoData: {
@@ -42,12 +38,12 @@ function todoReducer(state = initialState, action) {
             error: ''
 
         }
-        case todoActions.DELETE_TODO: return {
-            ...initialState,
-            loading: false,
-            todoData: state.todoData.values.filter((todoItem) => todoItem.todo_id !== action.id),
-            error: ''
-        }
+        case todoActions.DELETE_TODO: return Object.assign({}, state, {
+            ...state,
+            todoData: {
+                id: action.payload
+            }
+        })
         case todoActions.FETCH_FAIL: return {
             loading: false,
             todoData: [],
@@ -57,4 +53,7 @@ function todoReducer(state = initialState, action) {
     }
 }
 
+export function useApiCallReducer() {
+    return useReducer(todoReducer, initialState);
+}
 export default todoReducer
