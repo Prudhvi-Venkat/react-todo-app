@@ -1,9 +1,7 @@
-import asyncReducer from "./asyncReducer";
 import todoReducer from "./todoReducer";
 
 const rootReducer = {
-    // asyncData: asyncReducer,
-    toDo: todoReducer
-}
+  toDo: todoReducer,
+};
 
 export default rootReducer;
