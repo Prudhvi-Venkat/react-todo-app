@@ -3,14 +3,12 @@ import Todo from "./components/Todo";
 import FilterButton from "./components/FilterButton";
 import Form from "./components/Form";
 import Footer from "./components/Footer";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 // import Test from './components/Test'
 import { fecthAllTodo } from "./redux/actions/todoActions";
 
 function App() {
   const [filter, setFilter] = useState("All");
-  const [todos, setTodoList] = useState([]);
 
   const initialState = useSelector((state) => {
     return state.toDo.todoData;
@@ -19,8 +17,6 @@ function App() {
     return state.toDo.loading;
   });
   const dispatch = useDispatch();
-
-  const baseURL = "http://localhost:5000";
 
   useEffect(() => {
     dispatch(fecthAllTodo());
@@ -33,15 +29,13 @@ function App() {
   };
   const FILTER_NAMES = Object.keys(FILTER_MAP);
 
-  const todoItemsServer = Object.values(initialState).map((todoItem) => {
+  const todoItemsServer = Object.values(initialState).map(({ todoItem }) => {
     return (
       <Todo
         key={todoItem.id}
         id={todoItem.id}
         name={todoItem.description}
         status={todoItem.status}
-        toggleTask={toggleTask}
-        editTask={editTask}
         addedDate={todoItem.createdAt}
         editedDate={todoItem.updatedAt}
       />
@@ -59,40 +53,6 @@ function App() {
 
   const headingText = `${todoItemsServer.length} tasks remaining`;
 
-  function toggleTask(id) {
-    const updatedTasks = todos.map((todoItem) => {
-      if (id === todoItem.todo_id) {
-        axios
-          .patch(baseURL + `/todos/${id}`, {
-            todo_id: id,
-            status: true,
-          })
-          .then((res) => res.data)
-          .catch((err) => console.log(err));
-        // return { ...todos, status: true }
-      }
-      return todos;
-    });
-    setTodoList(updatedTasks);
-  }
-
-  function editTask(id, newName, status) {
-    const editedData = {
-      todo_id: id,
-      description: newName,
-      status: status,
-    };
-    const editedTasksList = todos.map((todoItem) => {
-      if (todoItem.todo_id === id && newName !== "") {
-        axios
-          .patch(baseURL + `/todos/${id}`, editedData)
-          .then((res) => setTodoList(res.data))
-          .catch((err) => Promise.reject(err));
-      }
-      return todos;
-    });
-    setTodoList(editedTasksList);
-  }
   return (
     <>
       {!loadingState ? (

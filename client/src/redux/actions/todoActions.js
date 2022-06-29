@@ -51,11 +51,9 @@ const addTodo = (description) => {
 const editTodo = (id, description, status) => {
   return {
     type: EDIT_TODO,
-    payload: {
-      id,
-      description,
-      status,
-    },
+    payload: id,
+    description,
+    status,
   };
 };
 
@@ -88,7 +86,7 @@ export const editTodoData = (id, description, status) => {
     status: status,
   };
   return async (dispatch) => {
-    todoApi.patch(`/todos/${id}`, {
+    await todoApi.patch(`/todos/${id}`, {
       id: id,
       description: description,
       status: status,
@@ -103,14 +101,7 @@ export const toggleTodoData = (id, status) => {
     status: status,
   };
   return async (dispatch) => {
-    // await todoApi.patch(`/todos/${id}`, { id: id, status: status });
-    //   .then((response) => {
-    //     const apiData = response.data;
-    //     dispatch(allTodos(apiData));
-    //   })
-    //   .catch((error) => {
-    //     dispatch(fetchFail(error.message));
-    //   });
+    await todoApi.patch(`/todos/${id}`, { id: id, status: status });
     dispatch(toggleTodo(toggleTask));
   };
 };

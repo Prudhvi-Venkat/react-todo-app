@@ -11,20 +11,16 @@ import {
 function Todo(props) {
   const [isEditing, setEditing] = useState(false);
   const [newName, setNewName] = useState("");
-  const [status, setStatus] = useState(props.status);
+  const [checked, setChecked] = useState(props.status);
   const timeZone = "Asia/Kolkata";
   const dispatch = useDispatch();
 
-  function handleChange(e) {
-    setNewName(e.target.value);
-    setStatus(e.target.value);
-  }
   function handleSubmit(e) {
     e.preventDefault();
-    if (newName === "") {
+    if (!newName) {
       props.editTask(props.id, props.name, props.status);
     } else {
-      props.editTask(props.id, newName, props.status);
+      dispatch(editTodoData(props.id, newName, checked));
     }
     setNewName("");
     setEditing(false);
@@ -52,7 +48,7 @@ function Todo(props) {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder={props.name}
             value={newName}
-            onChange={handleChange}
+            onChange={(e) => setNewName(e.target.value)}
           />
         </div>
         <div className="flex justify-between items-center space-x-3 mx-auto">
@@ -63,11 +59,11 @@ function Todo(props) {
             >
               <input
                 type="checkbox"
-                // defaultValue={props.status}
-                value={status}
+                defaultValue={checked}
+                checked={checked}
                 id="edit-todo-item"
                 className="sr-only peer"
-                onChange={() => dispatch(toggleTodoData(props.id, status))}
+                onChange={() => dispatch(toggleTodoData(setChecked(checked)))}
               />
               <div className="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-500 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-green-600" />
               <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -79,9 +75,7 @@ function Todo(props) {
             <button
               type="button"
               className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800  focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
-              onClick={() =>
-                dispatch(editTodoData(props.id, newName, !props.status))
-              }
+              onClick={handleSubmit}
             >
               Save
             </button>

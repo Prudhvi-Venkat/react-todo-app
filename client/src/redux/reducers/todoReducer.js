@@ -33,7 +33,7 @@ function todoReducer(state = initialState, action) {
             } else {
               return {
                 ...item,
-                description: action.payload.newName,
+                description: action.payload.description,
                 status: action.payload.status,
               };
             }
@@ -48,7 +48,7 @@ function todoReducer(state = initialState, action) {
             if (item.id !== action.payload.id) {
               return item;
             } else {
-              return { ...item, status: action.payload.status };
+              return { ...item, status: !action.payload.status };
             }
           }),
         ],

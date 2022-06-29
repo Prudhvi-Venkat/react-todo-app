@@ -9,7 +9,7 @@ const Todo = db.todos;
 // MiddleWare Cors
 var corsOptions = {
   origin: true,
-  methods: ["GET", "PUT", "POST", "DELETE"],
+  methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
   optionsSuccessStatus: 200,
   preflightContinue: true,
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -18,6 +18,7 @@ app.options("*", cors(corsOptions));
 app.use(express.json());
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "*");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
@@ -44,6 +45,7 @@ app.get("/todos", async (req, res) => {
   }
   await Todo.findAll({
     order: [["id", "ASC"]],
+    limit: 10,
   }).then((data) => res.json(data));
 });
 
