@@ -4,7 +4,7 @@ import FilterButton from "./components/FilterButton";
 import Form from "./components/Form";
 import Footer from "./components/Footer";
 import { useDispatch, useSelector } from "react-redux";
-import Test from "./components/Test";
+// import Test from "./components/Test";
 import { fecthAllTodo } from "./redux/actions/todoActions";
 
 function App() {
@@ -51,7 +51,7 @@ function App() {
 
   return (
     <>
-      <Test />
+      {/* <Test /> */}
       <div className="flex flex-col justify-center items-center mx-auto max-h-screeen space-y-10 mb-10">
         <h1 className="text-2xl text-slate-600 font-semibold text-center">
           Todo App

@@ -13,18 +13,15 @@ function Todo(props) {
     return state.toDo.loading;
   });
   const [isEditing, setEditing] = useState(false);
-  const [newName, setNewName] = useState(props.description);
-  // const [checked, setChecked] = useState(false);
+  const [newName, setNewName] = useState("");
   const dispatch = useDispatch();
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!newName) {
-      alert("Field is Empty");
+    if (newName) {
+      dispatch(editTodoData(props.id, newName, props.status));
     } else {
-      dispatch(
-        editTodoData(props.id, newName, dispatch(toggleTodoData(props.id)))
-      );
+      dispatch(editTodoData(props.id, props.name, props.status));
     }
     setNewName("");
     setEditing(false);

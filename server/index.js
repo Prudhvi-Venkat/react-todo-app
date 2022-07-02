@@ -45,8 +45,8 @@ app.get("/todos", async (req, res) => {
     });
   }
   await Todo.findAll({
-    order: [["id", "DESC"]],
-    attributes: ["id", "description", "status"],
+    order: [["todo_id", "DESC"]],
+    attributes: ["id", "todo_id", "description", "status"],
     // limit: 10,
   }).then((data) => res.json(data));
 });
@@ -59,10 +59,22 @@ app.post("/todos", cors(corsOptions), async (req, res) => {
     });
   } else {
     const newTodo = {
+      todo_id: req.body.todo_id,
       description: req.body.description,
       status: req.body.status,
     };
     await Todo.create(newTodo)
+      .then((data) => {
+        if (data) {
+          res.send({
+            message: `Added todo item`,
+          });
+        } else {
+          res.send({
+            message: `Failed to add todo item`,
+          });
+        }
+      })
       .then((data) => res.json(data))
       .catch((err) => console.log(err));
   }
@@ -93,6 +105,17 @@ app.patch("/todos/:id", cors(corsOptions), async (req, res) => {
     });
   } else {
     await Todo.update(updatedTodo, { where: { id: id } })
+      .then((data) => {
+        if (data) {
+          res.send({
+            message: `Edited todo item with ID : ${id}`,
+          });
+        } else {
+          res.send({
+            message: `Failed to Edit todo item with ID : ${id}`,
+          });
+        }
+      })
       .then((data) => res.json(data))
       .catch((err) => console.log(err));
   }

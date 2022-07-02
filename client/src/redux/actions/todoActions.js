@@ -41,10 +41,11 @@ const fetchFail = (error) => {
     payload: error,
   };
 };
-const addTodo = (description, status) => {
+const addTodo = (todo_id, description, status) => {
   return {
     type: ADD_TODO,
-    payload: description,
+    payload: todo_id,
+    description,
     status,
   };
 };
@@ -71,11 +72,16 @@ const deleteTodo = (id) => {
     payload: id,
   };
 };
-export const addTodoData = (description, status) => {
-  const addItem = { description: description, status: status };
+export const addTodoData = (todo_id, description, status) => {
+  const addItem = {
+    todo_id: todo_id,
+    description: description,
+    status: status,
+  };
   return async (dispatch) => {
     await todoApi
       .post("/todos", {
+        todo_id: todo_id,
         description: description,
         status: status,
       })
@@ -106,10 +112,7 @@ export const toggleTodoData = (id) => {
     id: id,
   };
   return async (dispatch) => {
-    await todoApi
-      .patch(`/todos/${id}`, { id: id })
-      .then(() => dispatch(toggleTodo(toggleTask)))
-      .catch((err) => console.log(err));
+    await dispatch(toggleTodo(toggleTask));
   };
 };
 export const deleteTodoData = (id) => {
