@@ -1,26 +1,30 @@
 import React, { useState } from "react";
 import { MdEdit, MdEditOff, MdDelete, MdDeleteForever } from "react-icons/md";
-import { formatInTimeZone } from "date-fns-tz";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   deleteTodoData,
   toggleTodoData,
   editTodoData,
 } from "../redux/actions/todoActions";
+import Loader from "./Loader";
 
 function Todo(props) {
+  const loadingState = useSelector((state) => {
+    return state.toDo.loading;
+  });
   const [isEditing, setEditing] = useState(false);
-  const [newName, setNewName] = useState("");
-  const [checked, setChecked] = useState(props.status);
-  const timeZone = "Asia/Kolkata";
+  const [newName, setNewName] = useState(props.description);
+  // const [checked, setChecked] = useState(false);
   const dispatch = useDispatch();
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!newName) {
-      props.editTask(props.id, props.name, props.status);
+      alert("Field is Empty");
     } else {
-      dispatch(editTodoData(props.id, newName, checked));
+      dispatch(
+        editTodoData(props.id, newName, dispatch(toggleTodoData(props.id)))
+      );
     }
     setNewName("");
     setEditing(false);
@@ -36,10 +40,6 @@ function Todo(props) {
           <h4 className="mb-5 text-left text-xl font-semibold text-gray-600 ">
             {props.name}
           </h4>
-          <span className="mb-5 text-sm font-semibold text-gray-400 ">
-            {" "}
-            Added : {formatInTimeZone(props.addedDate, timeZone, "do MMM yyyy")}
-          </span>
         </div>
         <div className="flex flex-row w-auto mb-5">
           <input
@@ -59,13 +59,15 @@ function Todo(props) {
             >
               <input
                 type="checkbox"
-                defaultValue={checked}
-                checked={checked}
+                value={props.status}
                 id="edit-todo-item"
                 className="sr-only peer"
-                onChange={() => dispatch(toggleTodoData(setChecked(checked)))}
+                onChange={
+                  // () => setChecked(!checked)
+                  () => dispatch(toggleTodoData(props.id))
+                }
               />
-              <div className="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-500 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-green-600" />
+              <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"></div>
               <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
                 {props.status === true ? "Completed" : "Active"}
               </span>
@@ -88,71 +90,72 @@ function Todo(props) {
             </button>
           </div>
         </div>
-        {props.editedDate ? (
-          <div className="flex justify-center items-center mt-3">
-            <span className="inline-flex text-sm text-gray-400">
-              Edited :{" "}
-              {formatInTimeZone(props.editedDate, timeZone, "do MMM yyyy")}
-            </span>
-          </div>
-        ) : (
-          ""
-        )}
       </div>
     </form>
   );
   const viewTemplate = (
-    <ul key={props.id}>
-      <div>
-        <li className="w-auto flex px-4 py-2 border-b justify-between items-center border-gray-200 rounded-t-lg dark:border-gray-600">
-          <div className="ml-2">
-            <label
-              className="text-lg font-semibold text-gray-900 dark:text-gray-300"
-              htmlFor={props.id}
-            >
-              {props.name}
-            </label>
-          </div>
-          <div>
-            {props.status !== true ? (
-              <button
-                type="button"
-                className="py-2 px-4 mr-2 mb-2 text-lg font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                onClick={() => setEditing(true)}
-              >
-                <MdEdit /> <span className="hidden">{props.name}</span>
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="py-2 px-4 mr-2 mb-2 cursor-not-allowed text-lg font-medium text-white focus:outline-none bg-gray-600 rounded-full border-none hover:bg-gray-900 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-              >
-                <MdEditOff /> <span className="hidden">{props.name}</span>
-              </button>
-            )}
-            {props.status !== false ? (
-              <button
-                type="button"
-                className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-lg px-4 py-2 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                onClick={() => dispatch(deleteTodoData(props.id))}
-              >
-                <MdDelete /> <span className="hidden">{props.name}</span>
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="text-white text-lg cursor-not-allowed bg-gray-700 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full px-4 py-2 text-center mr-2 mb-2 hover:text-red-700 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-              >
-                <MdDeleteForever /> <span className="hidden">{props.name}</span>
-              </button>
-            )}
-          </div>
-        </li>
-      </div>
-    </ul>
+    <>
+      <ul key={props.id}>
+        <div>
+          {!loadingState ? (
+            <li className="w-auto flex px-4 py-2 border-b justify-between items-center border-gray-200 rounded-t-lg dark:border-gray-600">
+              <div className="ml-2">
+                <label
+                  className="text-lg font-semibold text-gray-900 dark:text-gray-300"
+                  htmlFor={props.id}
+                >
+                  {props.name}
+                </label>
+              </div>
+              <div>
+                {props.status !== true ? (
+                  <button
+                    type="button"
+                    className="py-2 px-4 mr-2 mb-2 text-lg font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                    onClick={() => setEditing(true)}
+                  >
+                    <MdEdit /> <span className="hidden">{props.name}</span>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="py-2 px-4 mr-2 mb-2 cursor-not-allowed text-lg font-medium text-white focus:outline-none bg-gray-600 rounded-full border-none hover:bg-gray-900 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  >
+                    <MdEditOff /> <span className="hidden">{props.name}</span>
+                  </button>
+                )}
+                {props.status !== false ? (
+                  <button
+                    type="button"
+                    className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-lg px-4 py-2 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                    onClick={() => dispatch(deleteTodoData(props.id))}
+                  >
+                    <MdDelete /> <span className="hidden">{props.name}</span>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="text-white text-lg cursor-not-allowed bg-gray-700 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full px-4 py-2 text-center mr-2 mb-2 hover:text-red-700 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                  >
+                    <MdDeleteForever />{" "}
+                    <span className="hidden">{props.name}</span>
+                  </button>
+                )}
+              </div>
+            </li>
+          ) : (
+            <Loader />
+          )}
+        </div>
+      </ul>
+    </>
   );
 
-  return <>{isEditing ? editingTemplate : viewTemplate}</>;
+  return (
+    <>
+      {isEditing ? editingTemplate : !loadingState ? viewTemplate : <Loader />}
+    </>
+  );
 }
 
 export default Todo;

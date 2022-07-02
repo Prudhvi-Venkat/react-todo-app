@@ -5,6 +5,7 @@ const port = process.env.PORT || 5000;
 const pool = require("./config/config.json");
 const db = require("./models");
 const Todo = db.todos;
+const bodyParser = require("body-parser");
 
 // MiddleWare Cors
 var corsOptions = {
@@ -15,7 +16,7 @@ var corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.options("*", cors(corsOptions));
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "*");
@@ -25,7 +26,7 @@ app.use(function (req, res, next) {
   );
   next();
 });
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Sequelize
 
@@ -40,25 +41,26 @@ db.sequelize
 app.get("/todos", async (req, res) => {
   if (!req) {
     res.status(400).send({
-      message: "Fetch failed" + res.status,
+      message: "Fetch failed",
     });
   }
   await Todo.findAll({
-    order: [["id", "ASC"]],
-    limit: 10,
+    order: [["id", "DESC"]],
+    attributes: ["id", "description", "status"],
+    // limit: 10,
   }).then((data) => res.json(data));
 });
 
 // Add a todo
 app.post("/todos", cors(corsOptions), async (req, res) => {
-  if (req.body.description === "") {
+  if (!req.body.description) {
     res.status(400).send({
-      message: "Description is empty" + res.status,
+      message: "Description is empty",
     });
   } else {
     const newTodo = {
       description: req.body.description,
-      status: false,
+      status: req.body.status,
     };
     await Todo.create(newTodo)
       .then((data) => res.json(data))
@@ -71,7 +73,7 @@ app.get("/todos/:id", cors(corsOptions), async (req, res) => {
   const id = req.params.id;
   if (!id) {
     res.status(400).send({
-      message: `Fetching details failed with ID : ${id}` + res.status,
+      message: `Fetching details failed with ID : ${id}`,
     });
   } else {
     await Todo.findOne({ where: { id: id } }).then((data) => res.json(data));
@@ -82,12 +84,12 @@ app.get("/todos/:id", cors(corsOptions), async (req, res) => {
 app.patch("/todos/:id", cors(corsOptions), async (req, res) => {
   const id = req.params.id;
   const updatedTodo = {
-    description: req.body.newName,
+    description: req.body.description,
     status: req.body.status,
   };
   if (!id) {
     res.status(400).send({
-      message: `Editing details failed with ID : ${id}` + res.status,
+      message: `Editing details failed with ID : ${id}`,
     });
   } else {
     await Todo.update(updatedTodo, { where: { id: id } })
@@ -105,11 +107,11 @@ app.delete("/todos/:id", cors(corsOptions), async (req, res) => {
     .then((num) => {
       if (num) {
         res.send({
-          message: `Deleted todo item with ID : ${id}` + res.status,
+          message: `Deleted todo item with ID : ${id}`,
         });
       } else {
         res.send({
-          message: `Failed to delete todo item with ID : ${id}` + res.status,
+          message: `Failed to delete todo item with ID : ${id}`,
         });
       }
     })
