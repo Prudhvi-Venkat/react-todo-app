@@ -95,7 +95,7 @@ function Todo(props) {
       <ul key={props.id}>
         <div>
           {!loadingState ? (
-            <li className="w-auto flex px-4 py-2 border-b justify-between items-center border-gray-200 rounded-t-lg dark:border-gray-600">
+            <li className="w-auto flex px-4 py-2 justify-between items-cente rounded-t-lg dark:border-gray-600">
               <div className="ml-2">
                 <label
                   className="text-lg font-semibold text-gray-900 dark:text-gray-300"

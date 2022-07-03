@@ -47,20 +47,17 @@ function App() {
     />
   ));
 
-  const headingText = `${todoItemsServer.length} tasks remaining`;
+  const headingText = `${todoItemsServer.length}  tasks remaining`;
 
   return (
-    <>
+    <div className="justify-center min-h-screen">
       {/* <Test /> */}
-      <div className="flex flex-col justify-center items-center mx-auto max-h-screeen space-y-10 mb-10">
-        <h1 className="text-2xl text-slate-600 font-semibold text-center">
-          Todo App
-        </h1>
-        <div className="flex w-full">
-          <div className="w-1/2">
+      <div className="flex flex-grow flex-col justify-center mx-auto min-h-screen">
+        <div className="flex flex-row w-full">
+          <div className="w-1/2 mx-auto my-auto px-10">
             <Form />
           </div>
-          <div className="w-1/2 mx-auto p-10">
+          <div className="w-1/2 mx-auto px-10">
             <div
               className="flex justify-center items-center mx-auto rounded-md"
               role="group"
@@ -70,14 +67,20 @@ function App() {
             <h2 className="text-md text-slate-600 font-semibold text-center mt-5 mb-5">
               {headingText}
             </h2>
-            <div className="container p-5 w-auto flex flex-col text-sm font-semibold justify-between text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-              {todoItemsServer}
+            <div className="p-5 overflow-y-auto h-80 w-auto flex flex-col text-sm font-semibold justify-between text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+              {todoItemsServer && todoItemsServer.length ? (
+                todoItemsServer
+              ) : (
+                <div className="flex justify-center items-center text-3xl text-gray-500 font-semibold my-auto mx-auto">
+                  List is empty
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 
