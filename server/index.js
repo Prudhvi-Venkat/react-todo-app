@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Sequelize
 
 db.sequelize
-  .sync()
+  .sync({ force: true })
   .then(() => console.log("Database Sync Successfull"))
   .catch((err) => console.log(err.message));
 
@@ -36,43 +36,32 @@ app.get("/todos", async (req, res) => {
     });
   }
   await Todo.findAll({
-    order: [["todo_id", "DESC"]],
-    attributes: ["id", "todo_id", "description", "status"],
+    // order: [["todo_id", "DESC"]],
+    // attributes: ["id", "todo_id", "description", "status"],
     // limit: 10,
   }).then((data) => res.json(data));
 });
 
 // Add a todo
-app.post("/todos", cors(corsOptions), async (req, res) => {
+app.post("/todos", async (req, res) => {
+  const newTodo = {
+    todo_id: req.body.todo_id,
+    description: req.body.description,
+    status: req.body.status,
+  };
   if (!req.body.description) {
     res.status(400).send({
       message: "Description is empty",
     });
   } else {
-    const newTodo = {
-      todo_id: req.body.todo_id,
-      description: req.body.description,
-      status: req.body.status,
-    };
     await Todo.create(newTodo)
-      .then((data) => {
-        if (data) {
-          res.send({
-            message: `Added todo item`,
-          });
-        } else {
-          res.send({
-            message: `Failed to add todo item`,
-          });
-        }
-      })
       .then((data) => res.json(data))
       .catch((err) => console.log(err));
   }
 });
 
 // Get a todo item
-app.get("/todos/:id", cors(corsOptions), async (req, res) => {
+app.get("/todos/:id", async (req, res) => {
   const id = req.params.id;
   if (!id) {
     res.status(400).send({
@@ -84,7 +73,7 @@ app.get("/todos/:id", cors(corsOptions), async (req, res) => {
 });
 
 // Edit or update todo
-app.patch("/todos/:id", cors(corsOptions), async (req, res) => {
+app.patch("/todos/:id", async (req, res) => {
   const id = req.params.id;
   const updatedTodo = {
     description: req.body.description,
@@ -113,28 +102,13 @@ app.patch("/todos/:id", cors(corsOptions), async (req, res) => {
 });
 
 // Del todo
-app.delete("/todos/:id", cors(corsOptions), async (req, res) => {
+app.delete("/todos/:id", async (req, res) => {
   const id = req.params.id;
   await Todo.destroy({
     where: { id: id },
   })
-    .then((num) => {
-      if (num) {
-        res.send({
-          message: `Deleted todo item with ID : ${id}`,
-        });
-      } else {
-        res.send({
-          message: `Failed to delete todo item with ID : ${id}`,
-        });
-      }
-    })
     .then((data) => res.json(data))
-    .catch((err) => {
-      res.status(500).send({
-        message: `Could not delete Tutorial with id : ${id}`,
-      });
-    });
+    .catch((err) => console.log(err));
 });
 
 app.listen(port, () => {

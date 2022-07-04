@@ -6,13 +6,16 @@ import Footer from "./components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 // import Test from "./components/Test";
 import { fecthAllTodo } from "./redux/actions/todoActions";
+import Loader from "./components/Loader";
 
 function App() {
   const [filter, setFilter] = useState("All");
 
   const initialState = useSelector((state) => {
+    console.log(state);
     return state.toDo.todoData;
   });
+  console.log(initialState);
 
   const dispatch = useDispatch();
 
@@ -27,7 +30,7 @@ function App() {
   };
   const FILTER_NAMES = Object.keys(FILTER_MAP);
 
-  const todoItemsServer = Object.values(initialState).map((todoItem) => {
+  const todoItemsServer = initialState.map((todoItem) => {
     return (
       <Todo
         key={todoItem.id}
@@ -71,9 +74,7 @@ function App() {
               {todoItemsServer && todoItemsServer.length ? (
                 todoItemsServer
               ) : (
-                <div className="flex justify-center items-center text-3xl text-gray-500 font-semibold my-auto mx-auto">
-                  List is empty
-                </div>
+                <Loader />
               )}
             </div>
           </div>

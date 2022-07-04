@@ -16,29 +16,31 @@ function todoReducer(state = initialState, action) {
 
     case todoActions.ADD_TODO:
       return Object.assign({}, state, {
-        ...state,
+        loading: true,
         todoData: [
           ...state.todoData,
           {
+            todo_id: action.payload.todo_id,
             description: action.payload.description,
             status: action.payload.status,
           },
         ],
       });
+
     case todoActions.EDIT_TODO:
       return Object.assign({}, state, {
         ...state,
         todoData: [
           ...state.todoData.map((item) => {
-            if (item.id !== action.payload.id) {
-              return item;
-            } else {
-              return Object.assign({}, item, {
-                ...item,
-                description: action.payload.description,
-                status: action.payload.status,
-              });
-            }
+            // eslint-disable-next-line no-unused-expressions
+            item.id === action.payload.id
+              ? item
+              : Object.assign({}, item, {
+                  ...item,
+                  description: action.payload.description,
+                  status: action.payload.status,
+                });
+            return item;
           }),
         ],
       });
