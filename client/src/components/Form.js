@@ -7,14 +7,13 @@ function Form() {
   const dispatch = useDispatch();
 
   var todoStatus = false;
-  const todoId = Math.floor(Math.random() * 100 + 1);
 
   function handleSubmit(e) {
     if (!name) {
       alert("Field is empty");
     } else {
       e.preventDefault();
-      dispatch(addTodoData(todoId, name, todoStatus));
+      dispatch(addTodoData(name, todoStatus));
       setName("");
     }
   }

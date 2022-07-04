@@ -16,15 +16,8 @@ function todoReducer(state = initialState, action) {
 
     case todoActions.ADD_TODO:
       return Object.assign({}, state, {
-        loading: true,
-        todoData: [
-          ...state.todoData,
-          {
-            todo_id: action.payload.todo_id,
-            description: action.payload.description,
-            status: action.payload.status,
-          },
-        ],
+        ...state,
+        todoData: [...state.todoData, action.payload],
       });
 
     case todoActions.EDIT_TODO:

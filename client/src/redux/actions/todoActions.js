@@ -41,21 +41,17 @@ const fetchFail = (error) => {
     payload: error,
   };
 };
-const addTodo = (todo_id, description, status) => {
+const addTodo = (data) => {
   return {
     type: ADD_TODO,
-    payload: todo_id,
-    description,
-    status,
+    payload: data,
   };
 };
 
-const editTodo = (id, description, status) => {
+const editTodo = (data) => {
   return {
     type: EDIT_TODO,
-    payload: id,
-    description,
-    status,
+    payload: data,
   };
 };
 
@@ -72,29 +68,18 @@ const deleteTodo = (id) => {
     payload: id,
   };
 };
-export const addTodoData = (todo_id, description, status) => {
-  const addItem = {
-    todo_id: todo_id,
-    description: description,
-    status: status,
-  };
+export const addTodoData = (description, status) => {
   return async (dispatch) => {
     await todoApi
       .post("/todos", {
-        todo_id: todo_id,
         description: description,
         status: status,
       })
-      .then(() => dispatch(addTodo(addItem)))
+      .then((res) => dispatch(addTodo(res.data)))
       .catch((err) => console.log(err));
   };
 };
 export const editTodoData = (id, description, status) => {
-  const editedData = {
-    id: id,
-    description: description,
-    status: status,
-  };
   return async (dispatch) => {
     await todoApi
       .patch(`/todos/${id}`, {
@@ -102,7 +87,7 @@ export const editTodoData = (id, description, status) => {
         description: description,
         status: status,
       })
-      .then(() => dispatch(editTodo(editedData)))
+      .then((res) => dispatch(editTodo(res.data)))
       .catch((err) => console.log(err));
   };
 };

@@ -12,10 +12,9 @@ function App() {
   const [filter, setFilter] = useState("All");
 
   const initialState = useSelector((state) => {
-    console.log(state);
+    console.log(state.toDo);
     return state.toDo.todoData;
   });
-  console.log(initialState);
 
   const dispatch = useDispatch();
 
