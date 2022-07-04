@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Sequelize
 
 db.sequelize
-  .sync({ force: true })
+  .sync({ alter: true })
   .then(() => console.log("Database Sync Successfull"))
   .catch((err) => console.log(err.message));
 
@@ -36,8 +36,8 @@ app.get("/todos", async (req, res) => {
     });
   }
   await Todo.findAll({
-    // order: [["todo_id", "DESC"]],
-    // attributes: ["id", "todo_id", "description", "status"],
+    order: [["id", "DESC"]],
+    // attributes: ["id", "description", "status"],
     // limit: 10,
   }).then((data) => res.json(data));
 });
@@ -45,70 +45,47 @@ app.get("/todos", async (req, res) => {
 // Add a todo
 app.post("/todos", async (req, res) => {
   const newTodo = {
-    todo_id: req.body.todo_id,
     description: req.body.description,
     status: req.body.status,
   };
-  if (!req.body.description) {
-    res.status(400).send({
-      message: "Description is empty",
-    });
-  } else {
-    await Todo.create(newTodo)
-      .then((data) => res.json(data))
-      .catch((err) => console.log(err));
-  }
+  req
+    ? await Todo.create(newTodo)
+        .then((data) => res.json(data))
+        .catch((err) => console.log(err))
+    : res.status;
 });
 
 // Get a todo item
 app.get("/todos/:id", async (req, res) => {
   const id = req.params.id;
-  if (!id) {
-    res.status(400).send({
-      message: `Fetching details failed with ID : ${id}`,
-    });
-  } else {
-    await Todo.findOne({ where: { id: id } }).then((data) => res.json(data));
-  }
+  id
+    ? await Todo.findOne({ where: { id: id } }).then((data) => res.json(data))
+    : res.status;
 });
 
 // Edit or update todo
 app.patch("/todos/:id", async (req, res) => {
-  const id = req.params.id;
-  const updatedTodo = {
-    description: req.body.description,
-    status: req.body.status,
-  };
-  if (!id) {
-    res.status(400).send({
-      message: `Editing details failed with ID : ${id}`,
-    });
-  } else {
-    await Todo.update(updatedTodo, { where: { id: id } })
-      .then((data) => {
-        if (data) {
-          res.send({
-            message: `Edited todo item with ID : ${id}`,
-          });
-        } else {
-          res.send({
-            message: `Failed to Edit todo item with ID : ${id}`,
-          });
-        }
+  req
+    ? await Todo.upsert({
+        id: req.params.id,
+        description: req.body.description,
+        status: req.body.status,
       })
-      .then((data) => res.json(data))
-      .catch((err) => console.log(err));
-  }
+        .then(([data]) => res.json(data))
+        .catch((err) => console.log(err))
+    : res.status;
 });
 
 // Del todo
 app.delete("/todos/:id", async (req, res) => {
   const id = req.params.id;
-  await Todo.destroy({
-    where: { id: id },
-  })
-    .then((data) => res.json(data))
-    .catch((err) => console.log(err));
+  id
+    ? await Todo.destroy({
+        where: { id: id },
+      })
+        .then((data) => res.json(data))
+        .catch((err) => console.log(err))
+    : res.status;
 });
 
 app.listen(port, () => {

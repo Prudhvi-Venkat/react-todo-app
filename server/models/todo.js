@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   Todo.init(
     {
-      todo_id: DataTypes.INTEGER,
       description: DataTypes.STRING,
       status: DataTypes.BOOLEAN,
     },

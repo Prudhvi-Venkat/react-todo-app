@@ -7,10 +7,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      todo_id: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-      },
       description: {
         allowNull: false,
         type: Sequelize.STRING,
