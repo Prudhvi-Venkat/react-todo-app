@@ -25,15 +25,13 @@ function todoReducer(state = initialState, action) {
         ...state,
         todoData: [
           ...state.todoData.map((item) => {
-            // eslint-disable-next-line no-unused-expressions
-            item.id === action.payload.id
+            return item.id !== action.payload.id
               ? item
-              : Object.assign({}, item, {
+              : {
                   ...item,
                   description: action.payload.description,
                   status: action.payload.status,
-                });
-            return item;
+                };
           }),
         ],
       });

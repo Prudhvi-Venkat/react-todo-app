@@ -83,7 +83,7 @@ app.delete("/todos/:id", async (req, res) => {
     ? await Todo.destroy({
         where: { id: id },
       })
-        .then((data) => res.json(data))
+        .then((res) => console.log(res.data))
         .catch((err) => console.log(err))
     : res.status;
 });

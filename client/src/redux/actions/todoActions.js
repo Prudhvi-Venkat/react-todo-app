@@ -93,11 +93,8 @@ export const editTodoData = (id, description, status) => {
 };
 
 export const toggleTodoData = (id) => {
-  const toggleTask = {
-    id: id,
-  };
   return async (dispatch) => {
-    await dispatch(toggleTodo(toggleTask));
+    await dispatch(toggleTodo({ id }));
   };
 };
 export const deleteTodoData = (id) => {
