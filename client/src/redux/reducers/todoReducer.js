@@ -40,14 +40,12 @@ function todoReducer(state = initialState, action) {
         ...state,
         todoData: [
           ...state.todoData.map((item) => {
-            if (item.id !== action.payload.id) {
-              return item;
-            } else {
-              return Object.assign({}, item, {
-                ...item,
-                status: !item.status,
-              });
-            }
+            return item.id !== action.payload.id
+              ? item
+              : {
+                  ...item,
+                  status: !item.status,
+                };
           }),
         ],
       });

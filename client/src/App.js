@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Todo from "./components/Todo";
 import FilterButton from "./components/FilterButton";
-import Form from "./components/Form";
+import Form from "./components/InputForm";
 import Footer from "./components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 // import Test from "./components/Test";
+import Navbar from "./components/Navbar";
 import { fecthAllTodo } from "./redux/actions/todoActions";
 import Loader from "./components/Loader";
 
@@ -12,7 +13,7 @@ function App() {
   const [filter, setFilter] = useState("All");
 
   const initialState = useSelector((state) => {
-    console.log(state.toDo);
+    // console.log(state.toDo);
     return state.toDo.todoData;
   });
 
@@ -52,9 +53,10 @@ function App() {
   const headingText = `${todoItemsServer.length}  tasks remaining`;
 
   return (
-    <div className="justify-center min-h-screen">
+    <div className="justify-center min-h-screen space-y-8 dark:bg-gray-400">
       {/* <Test /> */}
-      <div className="flex flex-grow flex-col justify-center mx-auto min-h-screen">
+      <Navbar />
+      <div className="flex flex-grow flex-col justify-center mx-auto ">
         <div className="flex flex-row w-full">
           <div className="w-1/2 mx-auto my-auto px-10">
             <Form />
@@ -70,7 +72,7 @@ function App() {
               {headingText}
             </h2>
             <div className="p-5 overflow-y-auto h-80 w-auto flex flex-col text-sm font-semibold justify-between text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-              {todoItemsServer && todoItemsServer.length ? (
+              {todoItemsServer && todoItemsServer.length > 0 ? (
                 todoItemsServer
               ) : (
                 <Loader />
