@@ -65,7 +65,7 @@ function Form() {
           <button
             type="button"
             onClick={handleSubmit}
-            className="text-white absolute right-2  bottom-2 bg-pale hover:bg-pale-800 focus:ring-4 focus:outline-none focus:ring-pale-300 font-semibold rounded-lg text-md px-4 py-2 dark:bg-pale-600 dark:hover:bg-pale-700 dark:focus:ring-pale-800"
+            className="text-white absolute right-2  bottom-2 bg-aqua-400 hover:bg-aqua-700 focus:ring-4 focus:outline-none focus:ring-aqua-300 font-semibold rounded-lg text-md px-4 py-2 dark:bg-aqua-600 dark:hover:bg-aqua-700 dark:focus:ring-aqua-800"
           >
             Add
           </button>
