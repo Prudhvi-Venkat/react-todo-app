@@ -37,7 +37,7 @@ app.get("/todos", async (req, res) => {
   }
   await Todo.findAll({
     order: [["id", "DESC"]],
-    // attributes: ["id", "description", "status"],
+    attributes: ["id", "description", "status"],
     // limit: 10,
   }).then((data) => res.json(data));
 });
@@ -83,9 +83,9 @@ app.delete("/todos/:id", async (req, res) => {
     ? await Todo.destroy({
         where: { id: id },
       })
-        .then((res) => res.json(data))
+        .then((data) => res.json(data))
         .catch((err) => console.log(err))
-    : res;
+    : res.status;
 });
 
 app.listen(port, () => {

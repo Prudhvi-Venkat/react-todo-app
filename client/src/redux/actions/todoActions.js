@@ -33,6 +33,7 @@ const allTodos = (response) => {
   return {
     type: ALL_TODOS,
     payload: response,
+    meta: { WebSocket: true },
   };
 };
 const fetchFail = (error) => {
@@ -101,7 +102,7 @@ export const deleteTodoData = (id) => {
   return async (dispatch) => {
     await todoApi
       .delete(`/todos/${id}`, { id: id })
-      .then(() => dispatch(deleteTodo(id)))
       .catch((err) => console.log(err));
+    dispatch(deleteTodo(id));
   };
 };

@@ -2,6 +2,7 @@
 
 # client dependencies
 /client/node_modules
+/client/build
 yarn.lock
 /client/yarn.lock
 /.pnp
