@@ -102,7 +102,8 @@ export const deleteTodoData = (id) => {
   return async (dispatch) => {
     await todoApi
       .delete(`/todos/${id}`, { id: id })
+      .then(() => dispatch(deleteTodo(id)))
       .catch((err) => console.log(err));
-    dispatch(deleteTodo(id));
+    // dispatch(deleteTodo(id));
   };
 };

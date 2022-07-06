@@ -5,7 +5,8 @@ function Navbar() {
   const [colorTheme, setTheme] = ToggleDarkMode();
   return (
     <div>
-      <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-600 shadow-md">
+      <nav className="bg-white border-gray-200 px-2 sm:px-4 py-1 dark:bg-gray-600 shadow-md">
+        {" "}
         <div className="container justify-between flex flex-wrap items-center mx-auto">
           <a href="/" className="flex items-center">
             <img src={"logo.png"} className="mr-3 h-6 sm:h-9" alt="Logo" />
