@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const port = process.env.NODE_DOCKER_PORT || 5000;
+const port = 5000;
 // import pool from "./config/config.json";
 const db = require("./models");
 const bodyParser = require("body-parser");

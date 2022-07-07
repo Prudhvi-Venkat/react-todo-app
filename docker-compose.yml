@@ -1,32 +1,35 @@
-version: '3.8'
+version: '4.10'
 services:
   db:
-    image: postgres
+    image: 'postgres:14'
+    # ports:
+    #   - 5432:5432
     restart: unless-stopped
-    env_file: ./.env
+    volumes:
+      - db:/var/lib/postgresql/data
     environment:
-      - MYPG_ROOT_PASSWORD=$MYPGDB_ROOT_PASSWORD
-      - MYPG_DATABASE=$MYPGDB_DATABASE
-    ports:
-      - $MYPGDB_LOCAL_PORT:$MYPGDB_DOCKER_PORT
+      POSTGRES_USER: postgres # The PostgreSQL user (useful to connect to the database)
+      POSTGRES_PASSWORD: 7859 # The PostgreSQL password (useful to connect to the database)
+      POSTGRES_DB: javascript # The PostgreSQL default database (automatically created at first launch)
+    
     networks:
       - backend
-  
+
   server:
     depends_on:
       - db
     build: ./server
     restart: unless-stopped
-    env_file: ./.env
+    # env_file: ./.env
     ports:
-      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
-    environment:
-      - DB_HOST=db
-      - DB_USER=$MYPGDB_USER
-      - DB_PASSWORD=$MYPGDB_ROOT_PASSWORD
-      - DB_NAME=$MYPGDB_DATABASE
-      - DB_PORT=$MYPGDB_DOCKER_PORT
-      - CLIENT_ORIGIN=$CLIENT_ORIGIN
+      - 5000:5000
+    # environment:
+    #   - DB_HOST=db
+    #   - DB_USER=$MYPGDB_USER
+    #   - DB_PASSWORD=$MYPGDB_ROOT_PASSWORD
+    #   - DB_NAME=$MYPGDB_DATABASE
+      # - DB_PORT=$MYPGDB_DOCKER_PORT
+    #   - CLIENT_ORIGIN=$CLIENT_ORIGIN
     networks:
       - backend
       - frontend
@@ -38,10 +41,10 @@ services:
       args:
         - REACT_APP_API_BASE_URL=$CLIENT_API_BASE_URL
     ports:
-      - $REACT_LOCAL_PORT:$REACT_DOCKER_PORT
+      - 3000:3000
     networks:
-      - frontend  
-volumes: 
+      - frontend
+volumes:
   db:
 networks:
   backend:

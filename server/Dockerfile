@@ -2,5 +2,6 @@ FROM node:16
 WORKDIR /server
 COPY package.json .
 RUN yarn install
+EXPOSE 5000
 COPY . .
-CMD yarn start
+CMD yarn server
