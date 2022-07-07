@@ -1,14 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const port = process.env.PORT || 5000;
-const pool = require("./config/config.json");
+const port = process.env.NODE_DOCKER_PORT || 5000;
+// import pool from "./config/config.json";
 const db = require("./models");
 const bodyParser = require("body-parser");
 
 // MiddleWare Cors
 var corsOptions = {
-  origin: true,
+  origin: process.env.CLIENT_ORIGIN,
   methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
   optionsSuccessStatus: 200,
   preflightContinue: true,
@@ -27,6 +27,8 @@ db.sequelize
 
 // Routes
 require("./router/todo.routes.js")(app);
+
+require("dotenv").config();
 
 app.listen(port, () => {
   console.log(`Server started on port : ${port}`);

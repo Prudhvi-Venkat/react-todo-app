@@ -268,6 +268,7 @@ function Navbar() {
               <button
                 type="button"
                 className="text-white font-semibold shadow-lg bg-aqua-500 hover:bg-aqua-700 focus:ring-4 focus:outline-none focus:ring-aqua-300 rounded-md text-sm px-5 py-2.5 mr-3 md:mr-0 dark:bg-aqua-600 dark:hover:bg-aqua-700 dark:focus:ring-aqua-800"
+                onClick={() => console.log("Redirect to login page")}
               >
                 Login
               </button>

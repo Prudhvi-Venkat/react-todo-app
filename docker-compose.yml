@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MYPG_ROOT_PASSWORD=$MYPGDB_ROOT_PASSWORD
+      - MYPG_DATABASE=$MYPGDB_DATABASE
+    ports:
+      - $MYPGDB_LOCAL_PORT:$MYPGDB_DOCKER_PORT
+    networks:
+      - backend
+  
+  server:
+    depends_on:
+      - db
+    build: ./server
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+    environment:
+      - DB_HOST=db
+      - DB_USER=$MYPGDB_USER
+      - DB_PASSWORD=$MYPGDB_ROOT_PASSWORD
+      - DB_NAME=$MYPGDB_DATABASE
+      - DB_PORT=$MYPGDB_DOCKER_PORT
+      - CLIENT_ORIGIN=$CLIENT_ORIGIN
+    networks:
+      - backend
+      - frontend
+  client:
+    depends_on:
+      - server
+    build:
+      context: ./client
+      args:
+        - REACT_APP_API_BASE_URL=$CLIENT_API_BASE_URL
+    ports:
+      - $REACT_LOCAL_PORT:$REACT_DOCKER_PORT
+    networks:
+      - frontend  
+volumes: 
+  db:
+networks:
+  backend:
+  frontend:
