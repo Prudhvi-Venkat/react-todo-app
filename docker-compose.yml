@@ -2,16 +2,11 @@ version: '4.10'
 services:
   db:
     image: 'postgres:14'
-    # ports:
-    #   - 5432:5432
     restart: unless-stopped
     volumes:
       - db:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: postgres # The PostgreSQL user (useful to connect to the database)
-      POSTGRES_PASSWORD: 7859 # The PostgreSQL password (useful to connect to the database)
-      POSTGRES_DB: javascript # The PostgreSQL default database (automatically created at first launch)
-    
+      POSTGRES_PASSWORD: 7859 # The PostgreSQL password (useful to connect to the database)    
     networks:
       - backend
 
@@ -20,16 +15,8 @@ services:
       - db
     build: ./server
     restart: unless-stopped
-    # env_file: ./.env
     ports:
       - 5000:5000
-    # environment:
-    #   - DB_HOST=db
-    #   - DB_USER=$MYPGDB_USER
-    #   - DB_PASSWORD=$MYPGDB_ROOT_PASSWORD
-    #   - DB_NAME=$MYPGDB_DATABASE
-      # - DB_PORT=$MYPGDB_DOCKER_PORT
-    #   - CLIENT_ORIGIN=$CLIENT_ORIGIN
     networks:
       - backend
       - frontend
@@ -38,8 +25,6 @@ services:
       - server
     build:
       context: ./client
-      args:
-        - REACT_APP_API_BASE_URL=$CLIENT_API_BASE_URL
     ports:
       - 3000:3000
     networks:
