@@ -4,9 +4,10 @@ services:
     image: 'postgres:14'
     restart: unless-stopped
     volumes:
-      - db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data      
     environment:
-      POSTGRES_PASSWORD: 7859 # The PostgreSQL password (useful to connect to the database)    
+      POSTGRES_PASSWORD: '7859'
+      POSTGRES_USER: 'postgres'
     networks:
       - backend
 
@@ -27,6 +28,9 @@ services:
       context: ./client
     ports:
       - 3000:3000
+    volumes:
+      - /node_modules
+    stdin_open: true
     networks:
       - frontend
 volumes:

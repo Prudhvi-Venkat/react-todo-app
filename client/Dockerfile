@@ -1,8 +1,7 @@
-FROM node:16-alpine
-LABEL pern-todo_client="client"
+FROM node:16 as build
 WORKDIR /client
 COPY package.json .
 RUN yarn install
 COPY . .
 EXPOSE 3000
-RUN ["yarn", "build"]
+RUN ["yarn", "run","build"]

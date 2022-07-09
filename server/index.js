@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Sequelize
 db.sequelize
   .sync({ alter: true })
-  .then((res) => console.log(res))
+  // .then((res) => console.log(res))
   .then(() => console.log("Database Sync Successfull"))
   .catch((err) => console.log(err.message));
 

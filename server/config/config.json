@@ -3,7 +3,7 @@
     "database": "javascript",
     "username": "postgres",
     "password": "7859",
-    "host": "127.0.0.1",
+    "host": "db || locahost",
     "port": 5432,
     "dialect": "postgres",
     "typeValidation": true,
