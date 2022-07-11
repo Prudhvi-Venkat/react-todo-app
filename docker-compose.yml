@@ -10,26 +10,34 @@ services:
       POSTGRES_USER: 'postgres'
     networks:
       - backend
-
+    env_file:
+      - ./.env
   server:
     depends_on:
       - db
-    build: ./server
+    build:
+      dockerfile: Dockerfile
+      context: ./server
     restart: unless-stopped
+    volumes:
+      - /server/node_modules
     ports:
       - 5000:5000
     networks:
       - backend
       - frontend
+    env_file:
+      - ../.env
   client:
     depends_on:
       - server
     build:
+      dockerfile: Dockerfile
       context: ./client
     ports:
-      - 3000:3000
+      - 4000:3000
     volumes:
-      - /node_modules
+      - /client/node_modules
     stdin_open: true
     networks:
       - frontend

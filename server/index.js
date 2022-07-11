@@ -1,8 +1,9 @@
+// env file
+require("dotenv").config({ path: "../.env" });
+
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const port = 5000;
-// import pool from "./config/config.json";
 const db = require("./models");
 const bodyParser = require("body-parser");
 
@@ -26,10 +27,13 @@ db.sequelize
   .catch((err) => console.log(err.message));
 
 // Routes
+require("./router/index.js")(app);
 require("./router/todo.routes.js")(app);
+require("./router/auth.routes.js")(app);
+require("./router/user.routes.js")(app);
 
-require("dotenv").config();
-
-app.listen(port, () => {
-  console.log(`Server started on port : ${port}`);
+app.listen(process.env.NODE_ENV_PORT, () => {
+  console.log(
+    `Server started on port : NODE_ENV_PORT ${process.env.NODE_ENV_PORT}`
+  );
 });
