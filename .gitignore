@@ -16,6 +16,7 @@ yarn.lock
 
 # testing
 /coverage
+.vscode
 
 
 # production

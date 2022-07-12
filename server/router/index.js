@@ -1,7 +1,7 @@
 module.exports = (app) => {
   var router = require("express").Router();
 
-  // Retrieve all todos
+  // Check the connection
   router.get("/", (req, res) => {
     req
       ? res

@@ -1,48 +1,62 @@
 version: '4.10'
 services:
   db:
+    container_name: p-c
     image: 'postgres:14'
-    restart: unless-stopped
     volumes:
-      - db:/var/lib/postgresql/data      
+      - db-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: '7859'
       POSTGRES_USER: 'postgres'
     networks:
       - backend
+    deploy:
+      restart_policy:
+        condition: on-failure
     env_file:
-      - ./.env
+      - .env
   server:
+    container_name: s-c
     depends_on:
       - db
     build:
-      dockerfile: Dockerfile
       context: ./server
+      dockerfile: Dockerfile
     restart: unless-stopped
     volumes:
-      - /server/node_modules
+      - .:/server
+      - .:/server/node_modules
     ports:
       - 5000:5000
     networks:
       - backend
       - frontend
+    deploy:
+      restart_policy:
+        condition: on-failure
     env_file:
-      - ../.env
+      - .env
   client:
+    container_name: c-c
     depends_on:
       - server
     build:
-      dockerfile: Dockerfile
       context: ./client
+      dockerfile: Dockerfile
     ports:
-      - 4000:3000
+      - 3000:3000
     volumes:
-      - /client/node_modules
+      - .:/client/src
+      - .:/client/node_modules
+    deploy:
+      restart_policy:
+        condition: on-failure
     stdin_open: true
+    tty: true
     networks:
       - frontend
-volumes:
-  db:
 networks:
-  backend:
-  frontend:
+  backend: {}
+  frontend: {}
+volumes:
+  db-data:
