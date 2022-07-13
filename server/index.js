@@ -9,13 +9,13 @@ const bodyParser = require("body-parser");
 
 // MiddleWare Cors
 var corsOptions = {
-  origin: process.env.CLIENT_ORIGIN,
+  origin: true,
   methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
   optionsSuccessStatus: 200,
   preflightContinue: true,
   allowedHeaders: ["Content-Type", "Authorization"],
 };
-app.use("*", cors(corsOptions));
+app.use('*', cors(corsOptions))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -34,6 +34,6 @@ require("./router/user.routes.js")(app);
 
 app.listen(process.env.NODE_ENV_PORT, () => {
   console.log(
-    `Server started on port : NODE_ENV_PORT ${process.env.NODE_ENV_PORT}`
+    `Server started on port NODE_ENV_PORT : ${process.env.NODE_ENV_PORT}`
   );
 });
