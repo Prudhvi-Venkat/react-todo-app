@@ -8,11 +8,12 @@ yarn.lock
 /.pnp
 .pnp.js
 
+
 # server dependencies
 /server/node_modules
 yarn.lock
 /server/yarn.lock
-
+/node_modules
 
 # testing
 /coverage

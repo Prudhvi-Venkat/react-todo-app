@@ -8,14 +8,11 @@ import {
   DELETE_TODO,
   FETCH_FAIL,
 } from "./todoActionTypes";
-
-const todoApi = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL || "http://localhost:5000",
-});
+import { baseApi } from "../../api";
 
 export const fecthAllTodo = () => {
   return async (dispatch) => {
-    await todoApi
+    await baseApi
       .get("/todos")
       .then((response) => {
         dispatch(allTodos(response.data));
@@ -33,7 +30,6 @@ const allTodos = (response) => {
   return {
     type: ALL_TODOS,
     payload: response,
-    meta: { WebSocket: true },
   };
 };
 const fetchFail = (error) => {
@@ -71,7 +67,7 @@ const deleteTodo = (id) => {
 };
 export const addTodoData = (description, status) => {
   return async (dispatch) => {
-    await todoApi
+    await baseApi
       .post("/todos", {
         description: description,
         status: status,
@@ -82,7 +78,7 @@ export const addTodoData = (description, status) => {
 };
 export const editTodoData = (id, description, status) => {
   return async (dispatch) => {
-    await todoApi
+    await baseApi
       .patch(`/todos/${id}`, {
         id: id,
         description: description,
@@ -100,7 +96,7 @@ export const toggleTodoData = (id) => {
 };
 export const deleteTodoData = (id) => {
   return async (dispatch) => {
-    await todoApi
+    await baseApi
       .delete(`/todos/${id}`, { id: id })
       .then(() => dispatch(deleteTodo(id)))
       .catch((err) => console.log(err));
