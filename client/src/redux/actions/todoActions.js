@@ -1,4 +1,4 @@
-import axios from "axios";
+import { baseApi } from "../../api";
 import {
   FETCH_ALL_TODOS,
   ALL_TODOS,
@@ -8,7 +8,7 @@ import {
   DELETE_TODO,
   FETCH_FAIL,
 } from "./todoActionTypes";
-import { baseApi } from "../../api";
+
 
 export const fecthAllTodo = () => {
   return async (dispatch) => {
