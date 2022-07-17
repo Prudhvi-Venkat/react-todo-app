@@ -1,0 +1,1 @@
+A Simple Todo Application made using React(v-18.0) & Tailwindcss(v-3.0).

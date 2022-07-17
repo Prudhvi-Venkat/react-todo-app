@@ -1,0 +1,18 @@
+{
+  "development": {
+    "database": "javascript",
+    "username": "postgres",
+    "password": "7859",
+    "host": "localhost",
+    "port": 5432,
+    "dialect": "postgres",
+    "typeValidation": true,
+    "logQueryParameters": false,
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "acquire": 30000,
+      "idle": 10000
+    }
+  }
+}
