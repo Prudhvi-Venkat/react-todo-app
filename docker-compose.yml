@@ -1,8 +1,8 @@
-version: '4.10'
+version: '4'
 services:
   db:
-    container_name: p-c
-    image: 'postgres:12'
+    container_name: postgres
+    image: 'postgres:14'
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
@@ -16,7 +16,7 @@ services:
     env_file:
       - .env
   server:
-    container_name: s-c
+    container_name: express
     depends_on:
       - db
     build:
@@ -34,10 +34,8 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-    env_file:
-      - .env
   client:
-    container_name: c-c
+    container_name: react
     depends_on:
       - server
     build:

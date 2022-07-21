@@ -28,10 +28,10 @@ function todoReducer(state = initialState, action) {
             return item.id !== action.payload.id
               ? item
               : {
-                  ...item,
-                  description: action.payload.description,
-                  status: action.payload.status,
-                };
+                ...item,
+                description: action.payload.description,
+                status: action.payload.status,
+              };
           }),
         ],
       });
@@ -43,9 +43,9 @@ function todoReducer(state = initialState, action) {
             return item.id !== action.payload.id
               ? item
               : {
-                  ...item,
-                  status: !item.status,
-                };
+                ...item,
+                status: !item.status,
+              };
           }),
         ],
       });
@@ -55,6 +55,12 @@ function todoReducer(state = initialState, action) {
         todoData: [
           ...state.todoData.filter((item) => item.id !== action.payload),
         ],
+      });
+    case todoActions.DELETE_ALL_TODOS:
+      return Object.assign({}, state, {
+        ...state,
+        todoData: [],
+        error: action
       });
     case todoActions.FETCH_FAIL:
       return {

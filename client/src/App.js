@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Navbar from "./components/Navbar";
 import { fecthAllTodo } from "./redux/actions/todoActions";
 import Loader from "./components/Loader";
+import { deleteAllTodos } from "./redux/actions/todoActions"
 
 function App() {
   const [filter, setFilter] = useState("All");
@@ -71,6 +72,7 @@ function App() {
             <h2 className="text-md text-slate-600 font-semibold text-center mt-5 mb-5">
               {headingText}
             </h2>
+            <button className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900" onClick={() => dispatch(deleteAllTodos())}>Delete all</button>
             <div className="p-5 overflow-y-auto h-80 w-auto flex flex-col text-sm font-semibold justify-between text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
               {todoItemsServer && todoItemsServer.length > 0 ? (
                 todoItemsServer

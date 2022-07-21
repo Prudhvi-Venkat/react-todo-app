@@ -53,9 +53,6 @@
   "devDependencies": {
     "@redux-devtools/extension": "^3.2.2"
   },
-  "resolutions": {
-    "react-scripts/eslint-webpack-plugin": "2.3.0"
-  },
   "description": "React Todo App",
   "main": "index.js",
   "author": "Prudhvi-Venkat <dv.prudhvi@gmail.com>",

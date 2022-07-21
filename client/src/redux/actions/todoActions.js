@@ -6,6 +6,7 @@ import {
   EDIT_TODO,
   TOGGLE_TODO,
   DELETE_TODO,
+  DELETE_ALL_TODOS,
   FETCH_FAIL,
 } from "./todoActionTypes";
 
@@ -65,6 +66,13 @@ const deleteTodo = (id) => {
     payload: id,
   };
 };
+
+const deleteAllTodo = (data) => {
+  return {
+    type: DELETE_ALL_TODOS,
+    payload: data
+  };
+};
 export const addTodoData = (description, status) => {
   return async (dispatch) => {
     await baseApi
@@ -101,5 +109,13 @@ export const deleteTodoData = (id) => {
       .then(() => dispatch(deleteTodo(id)))
       .catch((err) => console.log(err));
     // dispatch(deleteTodo(id));
+  };
+};
+export const deleteAllTodos = () => {
+  return async (dispatch) => {
+    await baseApi
+      .delete(`/todos/`)
+      .then(() => dispatch(deleteAllTodo()))
+      .catch((err) => console.log(err));
   };
 };
