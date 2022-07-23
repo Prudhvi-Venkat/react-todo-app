@@ -33,7 +33,7 @@ exports.signin = async (req, res) => {
       });
       !user
         ? res.status(404).send({ message: "User not found" })
-        : !passwordValidator
+        : passwordValidator
           ? res
             .status(401)
             .send({ accessToken: null, message: "Invalid password" })

@@ -1,4 +1,4 @@
-import * as todoActions from "../actions/todoActionTypes";
+import { ALL_TODOS, ADD_TODO, EDIT_TODO, TOGGLE_TODO, DELETE_TODO, DELETE_ALL_TODOS, FETCH_FAIL } from "../actions/actionTypes";
 
 const initialState = {
   loading: false,
@@ -8,19 +8,20 @@ const initialState = {
 
 function todoReducer(state = initialState, action) {
   switch (action.type) {
-    case todoActions.ALL_TODOS:
+
+    case ALL_TODOS:
       return Object.assign({}, state, {
         ...state,
         todoData: action.payload,
       });
 
-    case todoActions.ADD_TODO:
+    case ADD_TODO:
       return Object.assign({}, state, {
         ...state,
         todoData: [...state.todoData, action.payload],
       });
 
-    case todoActions.EDIT_TODO:
+    case EDIT_TODO:
       return Object.assign({}, state, {
         ...state,
         todoData: [
@@ -35,7 +36,8 @@ function todoReducer(state = initialState, action) {
           }),
         ],
       });
-    case todoActions.TOGGLE_TODO:
+
+    case TOGGLE_TODO:
       return Object.assign({}, state, {
         ...state,
         todoData: [
@@ -49,25 +51,29 @@ function todoReducer(state = initialState, action) {
           }),
         ],
       });
-    case todoActions.DELETE_TODO:
+
+    case DELETE_TODO:
       return Object.assign({}, state, {
         ...state,
         todoData: [
           ...state.todoData.filter((item) => item.id !== action.payload),
         ],
       });
-    case todoActions.DELETE_ALL_TODOS:
+
+    case DELETE_ALL_TODOS:
       return Object.assign({}, state, {
         ...state,
         todoData: [],
         error: action
       });
-    case todoActions.FETCH_FAIL:
+
+    case FETCH_FAIL:
       return {
         loading: false,
         todoData: [],
         error: action,
       };
+
     default:
       return state;
   }

@@ -8,7 +8,7 @@ import {
   DELETE_TODO,
   DELETE_ALL_TODOS,
   FETCH_FAIL,
-} from "./todoActionTypes";
+} from "./actionTypes";
 
 
 export const fecthAllTodo = () => {
