@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { login } from "../redux/actions/authActions";
 
 
@@ -9,6 +9,7 @@ function LoginForm() {
   const [username, setUserName] = useState('')
   const [pwd, setPwd] = useState('')
   const dispatch = useDispatch();
+  const history = useNavigate();
 
   const authState = useSelector((state) => {
     console.log(state)
@@ -22,13 +23,17 @@ function LoginForm() {
       alert("Fields are empty")
     } else {
       e.preventDefault();
-      dispatch(login(username, pwd))
-      setPwd('');
-      setUserName('')
+      dispatch(login(username, pwd)).then(() => {
+        history.push("/profile");
+        window.location.reload();
+        setPwd('');
+        setUserName('')
+      }
+      )
     }
   }
-  if (!isLoggedIn) {
-    <Navigate to="/Profile" replace={true} />
+  if (isLoggedIn) {
+    <Navigate to="/profile" />
   } else {
     return (
       <div className="container justify-center mx-auto px-6 my-12 lg:w-1/2" >
