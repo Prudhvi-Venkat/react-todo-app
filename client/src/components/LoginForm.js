@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { login } from "../redux/actions/authActions";
 
-
 function LoginForm() {
 
   const [username, setUserName] = useState('')
@@ -33,7 +32,7 @@ function LoginForm() {
     }
   }
   if (isLoggedIn) {
-    <Navigate to="/profile" />
+    return <Navigate to="/profile" replace="true" />
   } else {
     return (
       <div className="container justify-center mx-auto px-6 my-12 lg:w-1/2" >

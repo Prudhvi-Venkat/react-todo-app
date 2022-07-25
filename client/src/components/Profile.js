@@ -13,16 +13,18 @@ import Loader from "../components/Loader";
 function Profile() {
     const [filter, setFilter] = useState("All");
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(fecthAllTodo());
     }, [dispatch]);
 
     const initialState = useSelector((state) => {
-        console.log(state)
+        console.log(state.toDo, state.auth)
         return state
     });
 
     const { user: currentUser } = initialState.auth;
+    const toDoState = initialState.toDo.todoData
 
     const FILTER_MAP = {
         All: () => true,
@@ -31,7 +33,7 @@ function Profile() {
     };
     const FILTER_NAMES = Object.keys(FILTER_MAP);
 
-    const todoItemsServer = initialState.toDo.map((todoItem) => {
+    const todoItemsServer = toDoState.map((todoItem) => {
         return (
             <Todo
                 key={todoItem.id}
@@ -52,8 +54,9 @@ function Profile() {
     ));
 
     const headingText = `${todoItemsServer.length}  tasks remaining`;
-    if (!currentUser.isLoggedIn) {
-        <Navigate to="/loginform" />
+
+    if (currentUser.isLoggedIn) {
+        return <Navigate to="/login" replace />
     } else {
         return (
             <div className="justify-center min-h-screen space-y-8 dark:bg-gray-400">
@@ -61,11 +64,7 @@ function Profile() {
                     <div className="flex flex-row w-full">
                         <div className="w-1/2 mx-auto my-auto px-10">
                             <Form />
-                            <h3>
-                                <strong>{currentUser.username}</strong> Profile
-                            </h3>
                         </div>
-
                         <div className="w-1/2 mx-auto px-10">
                             <div
                                 className="flex justify-center items-center mx-auto rounded-md"

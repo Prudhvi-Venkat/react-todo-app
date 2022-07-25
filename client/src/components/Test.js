@@ -2,156 +2,165 @@ import React from 'react'
 
 function Test() {
     return (
-        <div>
-            {/* Container */}
-            <div className="container mx-auto">
-                <div className="flex justify-center px-6 my-12">
-                    {/* Row */}
-                    <div className="w-full xl:w-3/4 lg:w-11/12 flex shadow-xl rounded-lg">
-                        {/* Col */}
-                        <div
-                            className="w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
-                            style={{
-                                backgroundImage:
-                                    'url("https://source.unsplash.com/Mv9hjnEUHR4/600x800")'
-
-                            }}
+        <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+            <div className="container flex flex-wrap justify-between items-center mx-auto">
+                <a href="https://flowbite.com/" className="flex items-center">
+                    <img
+                        src="/docs/images/logo.svg"
+                        className="mr-3 h-6 sm:h-9"
+                        alt="Flowbite Logo"
+                    />
+                    <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+                        Flowbite
+                    </span>
+                </a>
+                <div className="flex items-center md:order-2">
+                    <button
+                        type="button"
+                        className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                        id="user-menu-button"
+                        aria-expanded="false"
+                        data-dropdown-toggle="user-dropdown"
+                        data-dropdown-placement="bottom"
+                    >
+                        <span className="sr-only">Open user menu</span>
+                        <img
+                            className="w-8 h-8 rounded-full"
+                            src="/docs/images/people/profile-picture-3.jpg"
+                            alt="user"
                         />
-                        {/* Col */}
-                        <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none dark:bg-gray-900">
-                            <h3 className="pt-4 space-y-5 text-2xl text-center dark:text-white text-gray-800">Register Here !</h3>
-                            <form className="px-8 pt-6 pb-8 mt-4 mb-4 bg-white rounded dark:bg-gray-400">
-                                <div className="grid md:grid-cols-2 md:gap-6">
-                                    <div className="relative z-0 mb-6 w-full group">
-                                        <input
-                                            type="text"
-                                            name="floating_first_name"
-                                            id="floating_first_name"
-                                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" "
-                                            required=""
-                                        />
-                                        <label
-                                            htmlFor="floating_first_name"
-                                            className="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-700 font-semibold duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-focus:dark:text-gray-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                                        >
-                                            First name
-                                        </label>
-                                    </div>
-                                    <div className="relative z-0 mb-6 w-full group">
-                                        <input
-                                            type="text"
-                                            name="floating_last_name"
-                                            id="floating_last_name"
-                                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" "
-                                            required=""
-                                        />
-                                        <label
-                                            htmlFor="floating_last_name"
-                                            className="peer-focus:font-medium absolute text-md font-semibold text-gray-500 dark:text-gray-700 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                                        >
-                                            Last name
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className="grid md:grid-cols-2 md:gap-6">
-                                    <div className="relative z-0 mb-6 w-full group">
-                                        <input
-                                            type="text"
-                                            name="floating_user_name"
-                                            id="floating_user_name"
-                                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" "
-                                            required=""
-                                        />
-                                        <label
-                                            htmlFor="floating_user_name"
-                                            className="peer-focus:font-medium absolute text-md font-semibold text-gray-500 dark:text-gray-700 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                                        >
-                                            User Name
-                                        </label>
-                                    </div>
-                                    <div className="relative z-0 mb-6 w-full group">
-                                        <input
-                                            type="email"
-                                            name="floating_user_email"
-                                            id="floating_user_email"
-                                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" "
-                                            required=""
-                                        />
-                                        <label
-                                            htmlFor="floating_user_email"
-                                            className="peer-focus:font-medium absolute text-md font-semibold text-gray-500 dark:text-gray-700 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                                        >
-                                            Email address
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className="grid md:grid-cols-2 md:gap-6">
-                                    <div className="relative z-0 mb-6 w-full group">
-                                        <input
-                                            type="password"
-                                            name="floating_password"
-                                            id="floating_password"
-                                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" "
-                                            required=""
-                                        />
-                                        <label
-                                            htmlFor="floating_password"
-                                            className="peer-focus:font-medium absolute text-md font-semibold text-gray-500 dark:text-gray-700 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                                        >
-                                            Password
-                                        </label>
-                                    </div>
-                                    <div className="relative z-0 mb-6 w-full group">
-                                        <input
-                                            type="password"
-                                            name="repeat_password"
-                                            id="floating_repeat_password"
-                                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" "
-                                            required=""
-                                        />
-                                        <label
-                                            htmlFor="floating_repeat_password"
-                                            className="peer-focus:font-medium absolute text-md font-semibold text-gray-500 dark:text-gray-700 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                                        >
-                                            Confirm password
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className="mb-6 text-center mt-5">
-                                    <button
-                                        className="w-full px-4 py-2 font-semibold text-white bg-aqua-500 rounded-full hover:bg-aqua-700 focus:outline-none focus:shadow-outline"
-                                        type="button"
-                                    >
-                                        Register
-                                    </button>
-                                </div>
-                                <hr className="mb-6 border-t" />
-                                <div className="flex justify-evenly mx-auto">
-                                    <a
-                                        className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-                                        href="/"
-                                    >
-                                        Forgot Password?
-                                    </a>
-                                    <a
-                                        className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-                                        href="./index.html"
-                                    >
-                                        Already have an account? Login!
-                                    </a>
-                                </div>
-                            </form>
+                    </button>
+                    {/* Dropdown menu */}
+                    <div
+                        className="z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 block"
+                        id="user-dropdown"
+                        style={{
+                            position: "absolute",
+                            inset: "0px auto auto 0px",
+                            margin: 0,
+                            transform: "translate(619px, 74px)"
+                        }}
+                        data-popper-reference-hidden=""
+                        data-popper-escaped=""
+                        data-popper-placement="bottom"
+                    >
+                        <div className="py-3 px-4">
+                            <span className="block text-sm text-gray-900 dark:text-white">
+                                Bonnie Green
+                            </span>
+                            <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">
+                                name@flowbite.com
+                            </span>
                         </div>
+                        <ul className="py-1" aria-labelledby="user-menu-button">
+                            <li>
+                                <a
+                                    href="/"
+                                    className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                >
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/"
+                                    className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                >
+                                    Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/"
+                                    className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                >
+                                    Earnings
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/"
+                                    className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                >
+                                    Sign out
+                                </a>
+                            </li>
+                        </ul>
                     </div>
+                    <button
+                        data-collapse-toggle="mobile-menu-2"
+                        type="button"
+                        className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                        aria-controls="mobile-menu-2"
+                        aria-expanded="false"
+                    >
+                        <span className="sr-only">Open main menu</span>
+                        <svg
+                            className="w-6 h-6"
+                            aria-hidden="true"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                clipRule="evenodd"
+                            />
+                        </svg>
+                    </button>
+                </div>
+                <div
+                    className="hidden justify-between items-center w-full md:flex md:w-auto md:order-1"
+                    id="mobile-menu-2"
+                >
+                    <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+                        <li>
+                            <a
+                                href="/"
+                                className="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
+                                aria-current="page"
+                            >
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="/"
+                                className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                            >
+                                About
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="/"
+                                className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                            >
+                                Services
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="/"
+                                className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                            >
+                                Pricing
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="/"
+                                className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                            >
+                                Contact
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
+        </nav>
+
     )
 }
 
